@@ -1,0 +1,58 @@
+
+<div class="topContent">
+  <h1>Menu</h1>
+
+  <ul>
+    <li (click)="menuNumber(0)" [ngClass]="{ 'active': this.menuValue == 0}">All</li>
+    <li (click)="menuNumber(1)" [ngClass]="{ 'active': this.menuValue == 1}">Candy</li>
+    <li (click)="menuNumber(2)" [ngClass]="{ 'active': this.menuValue == 2}">Ice Cream</li>
+    <li (click)="menuNumber(3)" [ngClass]="{ 'active': this.menuValue == 3}">Chips</li>
+    <li (click)="menuNumber(4)" [ngClass]="{ 'active': this.menuValue == 4}">Jerky n' Nuts</li>
+    <li (click)="menuNumber(5)" [ngClass]="{ 'active': this.menuValue == 5}">Drinks</li>
+  </ul>
+</div>
+
+<ion-content class="coreWrapper">
+  <div class="cardGrid" *ngIf="this.menuValue == 0">
+    <div class="card">
+      <div class="bottomInfo">
+        <h2 class="snackName">Mars Bar</h2>
+        <h2 class="snackPrice">$2.50</h2>
+      </div>
+    </div>
+    <div class="card">
+      <div class="bottomInfo">
+        <h2 class="snackName">Kit-Kat</h2>
+        <h2 class="snackPrice">$2.50</h2>
+      </div>
+    </div>
+
+
+    <div class="card">
+      <div class="bottomInfo">
+        <h2 class="snackName">Ben & Jerry's</h2>
+        <h2 class="snackPrice">$15.00</h2>
+      </div>
+    </div>
+    <div class="card">
+      <div class="bottomInfo">
+        <h2 class="snackName">Oreo's</h2>
+        <h2 class="snackPrice">$8.00</h2>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="bottomInfo">
+        <h2 class="snackName">Glass Coke</h2>
+        <h2 class="snackPrice">$5.00</h2>
+      </div>
+    </div>
+    <div class="card">
+      <div class="bottomInfo">
+        <h2 class="snackName">Monster Energy</h2>
+        <h2 class="snackPrice">$4.50</h2>
+      </div>
+    </div>
+  </div>
+
+</ion-content>
