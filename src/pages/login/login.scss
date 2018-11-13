@@ -1,3 +1,47 @@
 page-login {
+  .loginLogo{
+    font-family: 'Gloria Hallelujah', cursive;
+    font-weight: bolder;
+    font-size: 56px;
+    width: 100%;
+    color: #4A4E69;
+    margin-top: 20%;
+    letter-spacing: 1px;
+    text-align: center;
+  }
 
+  .loginText{
+    font-family: 'Gloria Hallelujah', cursive;
+    font-weight: bolder;
+    font-size: 12px;
+    width: 100%;
+    color: #4A4E69;
+    margin-top: 5%;
+    letter-spacing: 1px;
+    text-align: center;
+    margin-bottom: 60%;
+  }
+
+  .loginBtn{
+    display: block;
+    width: 80%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    padding: 5%;
+    margin-top: 5%;
+    color: #fff;
+    font-family: 'Raleway', sans-serif;
+    border-radius: 3px;
+  }
+
+  .facebook{
+    background: #3b5998;
+  }
+
+  .google{
+    background: #DA4E43;
+  }
 }

@@ -14,34 +14,45 @@ import { CartPage } from '../pages/cart/cart';
 import { OrderPage } from '../pages/order/order';
 import { AdminPage } from '../pages/admin/admin';
 
+import { MorePopoverPage } from '../pages/morePopover';
+
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 import { firebaseConfig } from './credentials';
+
+import { AuthProvider } from '../providers/auth/auth';
 
 @NgModule({
   declarations: [
     MyApp,
+    LoginPage,
     HomePage,
     OrderPage,
-    AdminPage
+    AdminPage,
+    MorePopoverPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+   AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    LoginPage,
     HomePage,
     OrderPage,
-    AdminPage
+    AdminPage,
+    MorePopoverPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    AuthProvider
   ]
 })
 export class AppModule {}

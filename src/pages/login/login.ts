@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the LoginPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+// Providers
+import { AuthProvider } from '../../providers/auth/auth'
+import { HomePage } from '../home/home'
+
 
 @IonicPage()
 @Component({
@@ -15,11 +13,29 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class LoginPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private authService: AuthProvider) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
+  }
+
+  facebookLogin(){
+    this.authService.loginWithFacebook().then(res=>{
+      console.log("SUCCESS")
+      this.navCtrl.setRoot(HomePage);
+    }).catch(err=>{
+      console.log(err)
+    })
+  }
+
+  googleLogin(){
+    this.authService.loginWithGoogle().then(res=>{
+      console.log("SUCCESS")
+      this.navCtrl.setRoot(HomePage);
+    }).catch(err=>{
+      console.log(err)
+    })
   }
 
 }

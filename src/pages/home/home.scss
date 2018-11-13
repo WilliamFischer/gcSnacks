@@ -20,6 +20,11 @@ page-home {
       font-family: 'Raleway', sans-serif;
       padding-top: 5%;
       animation: fadein 0.5s;
+      width: 20% !important;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+
     }
 
     .homeLogo{
@@ -38,6 +43,11 @@ page-home {
       font-size: 28px;
       color:#BFACAA;
       padding-top: 4.2%;
+      margin-left: 20%;
+    }
+
+    .moreIconShuffle{
+        margin-left: 6%;
     }
 
     .topCloseIcon{
@@ -131,6 +141,8 @@ page-home {
           width: 100%;
           height: 190px;
           object-fit: cover;
+          background: #fff;
+          display: block;
         }
 
 
@@ -172,6 +184,7 @@ page-home {
       .itemImage{
         width: 100%;
         height: 100%;
+        background: #fff;
         object-fit: cover;
       }
     }

@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController,ModalController,AlertController } from 'ionic-angular';
+import { NavController,ModalController,PopoverController  } from 'ionic-angular';
 
 import { AngularFirestore,AngularFirestoreCollection } from 'angularfire2/firestore';
 
-import { AdminPage } from '../admin/admin';
+import { MorePopoverPage } from '../morePopover';
 
 @Component({
   selector: 'page-home',
@@ -22,7 +22,7 @@ export class HomePage {
   cardDesc: string;
   cardWeight: number;
 
-  constructor(public navCtrl: NavController,public modalCtrl: ModalController,private alertCtrl: AlertController,private fireStore: AngularFirestore) {
+  constructor(public navCtrl: NavController,public modalCtrl: ModalController,public popoverCtrl: PopoverController,private fireStore: AngularFirestore) {
     // this.getSongList()
 
     this.fireStore.collection('snacks').valueChanges().subscribe(
@@ -61,44 +61,6 @@ export class HomePage {
     this.cardWeight = null;
   }
 
-  triggerAdmin(){
-
-    let alert = this.alertCtrl.create({
-      title: 'Admin Login',
-      inputs: [
-        {
-          name: 'username',
-          placeholder: 'Username'
-        },
-        {
-          name: 'password',
-          placeholder: 'Password',
-          type: 'password'
-        }
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: data => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Login',
-          handler: data => {
-            if (data.username == 'admin' && data.password == '123') {
-              this.navCtrl.push(AdminPage);
-            } else {
-              return false;
-            }
-          }
-        }
-      ]
-    });
-    alert.present();
-  }
-
   searchToggle(){
     if(this.showSearch){
       this.showSearch = false;
@@ -107,17 +69,15 @@ export class HomePage {
     }
   }
 
-  // getSongList(): AngularFirestoreCollection<Snacks> {
-  //   return this.firestore.collection(`songList`);
-  // }
-
+  morePopover(myEvent) {
+    let popover = this.popoverCtrl.create(MorePopoverPage);
+    popover.present({
+      ev: myEvent
+    });
+  }
 
   addItemtoCart() {
-    let alert = this.alertCtrl.create({
-      subTitle: this.cardName + ' added to cart',
-      buttons: ['Dismiss']
-    });
-    alert.present();
+  
   }
 
   viewCart(){

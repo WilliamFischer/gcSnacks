@@ -49,6 +49,7 @@ export class AdminPage {
       desc: this.item.desc,
       imgurl: this.item.imgurl,
     })
+
   }
 
   goHome(){
