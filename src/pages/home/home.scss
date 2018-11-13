@@ -18,7 +18,7 @@ page-home {
       color: #22223B;
       font-weight: 500;
       font-family: 'Raleway', sans-serif;
-      margin-top: 7%;
+      padding-top: 5%;
       animation: fadein 0.5s;
     }
 
@@ -28,7 +28,7 @@ page-home {
       font-size: 21px;
       width: 100%;
       color: #4A4E69;
-      margin-top: 5.5%;
+      margin-top: 5%;
       letter-spacing: 1px;
     }
 
@@ -37,23 +37,23 @@ page-home {
       margin: 6%;
       font-size: 28px;
       color:#BFACAA;
-      padding-top: 0.5%;
+      padding-top: 4.2%;
     }
 
     .topCloseIcon{
       font-size: 21px;
-      margin: 7%;
+      margin: 8%;
     }
 
     .rightIcon{
       margin-left:87%;
-      padding-top: 0%;
+      padding-top: 4%;
       color: #E7CEE3;
     }
 
     ul{
       list-style: none;
-      margin-top: 10%;
+      margin-top: 7%;
       width: 100vw;
       overflow-x: auto;
       overflow-y: hidden;
@@ -66,7 +66,7 @@ page-home {
         white-space: nowrap;
         color: #C9ADA7;
         font-weight: 400;
-        margin-right: 8%;
+        margin-right: 5%;
         font-family: 'Nunito Sans', sans-serif;
         border: 2px solid #F2E9E4;
         padding: 2%;
@@ -79,6 +79,10 @@ page-home {
       .active{
         border-color: #C9ADA7;
         cursor: normal;
+      }
+
+      .spaceHere{
+        border: none;
       }
     }
 
@@ -156,11 +160,12 @@ page-home {
   }
 
   .oneItem{
-    background: #fff;
+    background: #F8F8F9;
     width: 100%;
     display: block;
     margin-top: 34%;
     font-family: 'Nunito Sans', sans-serif !important;
+    padding: 10%;
 
     .itemImageWrapper{
 
@@ -175,6 +180,7 @@ page-home {
         padding: 8%;
         padding-top: 2%;
         height: 50vh;
+        background: #fff;
     }
 
     .itemName{
