@@ -19,6 +19,36 @@ page-home {
       font-weight: 500;
       font-family: 'Raleway', sans-serif;
       margin-top: 7%;
+      animation: fadein 0.5s;
+    }
+
+    .homeLogo{
+      font-family: 'Gloria Hallelujah', cursive;
+      font-weight: bolder;
+      font-size: 21px;
+      width: 100%;
+      color: #4A4E69;
+      margin-top: 5.5%;
+      letter-spacing: 1px;
+    }
+
+    .topIcon{
+      position: absolute;
+      margin: 6%;
+      font-size: 28px;
+      color:#BFACAA;
+      padding-top: 0.5%;
+    }
+
+    .topCloseIcon{
+      font-size: 21px;
+      margin: 7%;
+    }
+
+    .rightIcon{
+      margin-left:87%;
+      padding-top: 0%;
+      color: #E7CEE3;
     }
 
     ul{
@@ -51,6 +81,28 @@ page-home {
         cursor: normal;
       }
     }
+
+    .coreSearch{
+      width: 90%;
+      padding: 3%;
+      margin-left: 5%;
+      margin-top: 5%;
+      border-radius: 5px;
+      border: 1px solid #C9ADA7;
+
+      font-family: 'Nunito Sans', sans-serif;
+    }
+
+    .coreSearch::placeholder{
+      color: #9A8C98;
+    }
+  }
+
+
+  .ionSpinner{
+      text-align: center;
+      margin-top: 50vh;
+      width: 100%;
   }
 
 
@@ -66,17 +118,24 @@ page-home {
       .card{
         background: #fff;
         width: 46%;
-        height: 230px;
+        height: 260px;
         margin: 2%;
         overflow: hidden;
         animation: fadein 0.5s;
+
+        .snackImg{
+          width: 100%;
+          height: 190px;
+          object-fit: cover;
+        }
+
 
         .bottomInfo{
           height: 35%;
           width: 100%;
           display: block;
           overflow: hidden;
-          margin-top: 80%;
+          margin-top: -5%;
           text-align: center;
           font-family: 'Nunito Sans', sans-serif;
 
@@ -95,9 +154,88 @@ page-home {
         }
       }
   }
-}
 
-@keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+  .oneItem{
+    background: #fff;
+    width: 100%;
+    display: block;
+    margin-top: 34%;
+    font-family: 'Nunito Sans', sans-serif !important;
+
+    .itemImageWrapper{
+
+      .itemImage{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .itemDetailsWrapper{
+        padding: 8%;
+        padding-top: 2%;
+        height: 50vh;
+    }
+
+    .itemName{
+      font-weight: 200;
+      color: #4A4E69;
+    }
+
+    .itemWeight{
+      font-size: 12px;
+      margin-top: 2%;
+      font-weight: 600;
+      color: #22223B;
+    }
+
+    .itemCost{
+      float: right;
+      margin-top: -18%;
+      font-size: 16px;
+      font-weight: 600;
+      color: #22223B;
+
+    }
+
+    .bottomSlash{
+      margin-top: 10%;
+      height: 2px;
+      display: block;
+      background: #e8e8e8;
+      border-radius: 5px;
+    }
+
+    .itemDescription{
+      margin-top: 10%;
+      font-weight: 400;
+      letter-spacing: 1px;
+      line-height: 25px;
+    }
+  }
+
+  .addItemFooter{
+    .toolbar{
+      padding: 8% !important;
+    }
+    .toolbar-background{
+      background: #C9ADA7 !important;
+      border: none !important;
+    }
+
+    .toolbar-title{
+      color: #fff !important;
+      font-weight: 400 !important;
+      font-family: 'Nunito Sans', sans-serif !important;
+    }
+
+    .iconFooter{
+      font-size: 28px;
+    }
+  }
+
+  @keyframes fadein {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+  }
 }

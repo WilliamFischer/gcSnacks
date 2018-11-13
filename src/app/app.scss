@@ -14,4 +14,10 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
-@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,700|Raleway:400,500,700');
+@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,700|Raleway:500|Gloria+Hallelujah');
+
+
+ion-spinner * {
+  stroke: #F2E9E4;
+  fill: #C9ADA7 !important;
+}

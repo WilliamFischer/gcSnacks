@@ -1,0 +1,74 @@
+page-cart {
+  .coreWrapper{
+    background: #F8F8F9;
+  }
+
+  .topContent{
+    background: white;
+    display: block;
+    position: absolute;
+    z-index: 9000;
+    height: 70px;
+    width: 100%;
+
+    h1{
+      font-size: 18px;
+      text-align: center;
+      color: #22223B;
+      font-weight: 500;
+      font-family: 'Raleway', sans-serif;
+      margin-top: 7%;
+      animation: fadein 0.5s;
+    }
+
+    .homeLogo{
+      font-family: 'Gloria Hallelujah', cursive;
+      font-weight: bolder;
+      font-size: 21px;
+      width: 100%;
+      color: #4A4E69;
+      margin-top: 5.5%;
+      letter-spacing: 1px;
+    }
+
+    .topIcon{
+      position: absolute;
+      margin: 6%;
+      font-size: 28px;
+      color:#4A4E69;
+      padding-top: 0.5%;
+    }
+
+    .topCloseIcon{
+      font-size: 18px;
+      margin-top: -8%;
+      position: absolute;
+    }
+
+    .rightIcon{
+      margin-left:87%;
+      padding-top: 0%;
+    }
+  }
+
+  .addItemFooter{
+    .toolbar{
+      padding: 8% !important;
+    }
+    .toolbar-background{
+      background: #C9ADA7 !important;
+      border: none !important;
+    }
+
+    .toolbar-title{
+      color: #fff !important;
+      font-weight: 400 !important;
+      font-family: 'Nunito Sans', sans-serif !important;
+    }
+
+    .iconFooter{
+      font-size: 28px;
+    }
+  }
+
+}

@@ -1,0 +1,24 @@
+
+<div class="topContent">
+    <h1 *ngIf="!paymentMode">Shopping Cart</h1>
+    <h1 *ngIf="paymentMode">Confirm Payment</h1>
+    <i class="rightIcon topCloseIcon topIcon icon-close" (click)="closeCart()"></i>
+</div>
+
+
+<ion-content class="coreWrapper">
+
+</ion-content>
+
+
+<ion-footer class="addItemFooter" *ngIf="paymentMode" (click)="placeOrder()">
+  <ion-toolbar>
+    <ion-title><i class="iconFooter icon-tick"></i></ion-title>
+  </ion-toolbar>
+</ion-footer>
+
+<ion-footer class="addItemFooter" *ngIf="!paymentMode" (click)="confirmPayment()">
+  <ion-toolbar>
+    <ion-title><i class="iconFooter icon-tick"></i></ion-title>
+  </ion-toolbar>
+</ion-footer>

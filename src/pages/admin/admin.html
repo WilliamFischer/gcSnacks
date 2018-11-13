@@ -1,0 +1,44 @@
+
+
+<div class="topContent">
+    <h1 *ngIf="!paymentMode">Admin Area</h1>
+    <i class="rightIcon topCloseIcon topIcon icon-close" (click)="goHome()"></i>
+</div>
+
+<ion-content padding>
+  <h1>Add Snack</h1>
+  <form (ngSubmit)="addItem()">
+    <ion-item>
+      <ion-label floating>Name</ion-label>
+      <ion-input type="text" [(ngModel)]="item.name" name="name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Category</ion-label>
+      <ion-select [(ngModel)]="item.category" name="category">
+        <ion-option value="chocolate">Chocolate</ion-option>
+        <ion-option value="candy">Candy</ion-option>
+        <ion-option value="chips">Chips</ion-option>
+        <ion-option value="jerkyn'nuts">Jerky n' Nuts</ion-option>
+        <ion-option value="drinks">Drinks</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Price</ion-label>
+      <ion-input [(ngModel)]="item.price" name="price" type="number"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Weight</ion-label>
+      <ion-input [(ngModel)]="item.weight" name="weight" type="number"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Description</ion-label>
+      <ion-textarea [(ngModel)]="item.desc" name="desc"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>ImgUrl</ion-label>
+      <ion-input [(ngModel)]="item.imgurl" name="imgurl"></ion-input>
+    </ion-item>
+    <button ion-button type="submit" block>Add Item</button>
+  </form>
+
+</ion-content>
