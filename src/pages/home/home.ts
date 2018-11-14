@@ -17,12 +17,16 @@ export class HomePage {
 
   cards: any;
   userSaveLocation: any;
+  userCart: any;
   itemShowing: boolean = false;
   cardName: string;
   cardImg: string;
   cardPrice: number;
   cardDesc: string;
   cardWeight: number;
+  cardAmount: number;
+  itemQuantity: number = 1;
+  adjustedPrice: any;
 
   constructor(public navCtrl: NavController,public modalCtrl: ModalController,public popoverCtrl: PopoverController,private fireStore: AngularFirestore, public afAuth: AngularFireAuth,private alertCtrl: AlertController) {
     // this.getSongList()
@@ -41,11 +45,11 @@ export class HomePage {
 
     this.fireStore.doc('users/' + this.afAuth.auth.currentUser.uid).valueChanges().subscribe(
       values =>{
-        if(!values.phone){
-          this.createUserDB();
-        }else{
+        if(values){
           var userName = this.afAuth.auth.currentUser.displayName;
           console.log("Welcome back " + userName)
+        }else{
+          this.createUserDB();
         }
       });
   }
@@ -54,6 +58,7 @@ export class HomePage {
   menuNumber(key){
     this.menuValue = key;
     this.itemShowing = null;
+    this.itemQuantity = 1;
   }
 
   showItemDetails(card){
@@ -61,9 +66,11 @@ export class HomePage {
 
     this.cardName = card.name;
     this.cardPrice = card.price;
+    this.adjustedPrice = card.price;
     this.cardImg = card.imgurl;
     this.cardDesc = card.desc;
     this.cardWeight = card.weight;
+    this.cardAmount = null;
 
 
     this.showSearch = false;
@@ -74,8 +81,12 @@ export class HomePage {
 
     this.cardName = null;
     this.cardPrice = null;
+    this.adjustedPrice = null;
     this.cardDesc = null;
     this.cardWeight = null;
+    this.cardAmount = null;
+
+    this.itemQuantity = 1;
   }
 
   searchToggle(){
@@ -94,13 +105,48 @@ export class HomePage {
   }
 
   addItemtoCart() {
+    var userUID = this.afAuth.auth.currentUser.uid;
 
+    this.userCart = this.fireStore.doc<any>('users/' + userUID + '/cart/' + this.cardName);
+    this.userCart.set({
+      item: this.cardName,
+      price: this.cardPrice,
+      img: this.cardImg,
+      quanitity: this.itemQuantity,
+      amount: this.adjustedPrice
+    })
+
+    console.log(this.cardName + ' added to cart')
+
+    this.itemShowing = null;
+    this.cardName = null;
+    this.cardPrice = null;
+    this.adjustedPrice = null;
+    this.cardDesc = null;
+    this.cardWeight = null;
+    this.cardAmount = null;
+
+    this.itemQuantity = 1
   }
 
   viewCart(){
     console.log("Open cart model")
     var modalPage = this.modalCtrl.create('CartPage');
     modalPage.present();
+  }
+
+  itemCountUp(){
+    this.itemQuantity++
+    var newPrice = +this.adjustedPrice + +this.cardPrice;
+    this.adjustedPrice = newPrice + '.00';
+  }
+
+  itemCountDown(){
+    if(this.itemQuantity == 1){}else{
+      this.itemQuantity--;
+      var newPrice = this.adjustedPrice - this.cardPrice;
+      this.adjustedPrice = newPrice + '.00';
+    }
   }
 
   createUserDB(){

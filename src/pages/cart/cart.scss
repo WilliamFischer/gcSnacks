@@ -3,6 +3,16 @@ page-cart {
     background: #F8F8F9;
   }
 
+  .emptyLabel{
+    text-align: center;
+    font-size: 12px;
+    margin-top: 45vh;
+    font-family: 'Nunito Sans', sans-serif;
+    font-style: italic;
+    font-weight: 200;
+    color: #E5989B;
+  }
+
   .topContent{
     background: white;
     display: block;
@@ -50,6 +60,108 @@ page-cart {
       padding-top: 0%;
     }
   }
+
+  .shoppingMenu{
+    margin-top: 12%;
+    padding: 5%;
+    padding-bottom: 20vh;
+
+    .menuItem{
+      width: 100%;
+      background: #fff;
+      height: 170px;
+      display: inline-flex;
+      margin-top: 5%;
+      overflow: hidden;
+
+      .cartImg{
+        width: 50%;
+        object-fit: cover;
+        height: 100%;
+      }
+
+      .rightSideContent{
+        width: 50%;
+        height: 100%;
+        text-align: center;
+        padding: 7%;
+
+        .itemCartName{
+          font-size: 22px;
+          color: #C9ADA7;
+          font-weight: 300;
+          white-space: nowrap;
+          width: 100%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+
+          font-family: 'Nunito Sans', sans-serif;
+        }
+
+        .itemCartPrice{
+          color: #8e8e8e;
+          font-size: 16px;
+          font-weight: 400;
+          margin-top: 10%;
+
+          font-family: 'Nunito Sans', sans-serif;
+        }
+
+        .quanitityGrid{
+          width: 100px;
+          height: 30px;
+          display: inline-flex;
+          margin-top: 5%;
+          border: 1px solid #BFACAA;
+
+
+          .box{
+            width: 33%;
+            text-align: center;
+            padding-top: 5%;
+            color: #BFACAA;
+            font-weight: 400;
+            font-family: 'Nunito Sans', sans-serif;
+          }
+
+          .boxa{
+            border-right: 1px solid #BFACAA;
+          }
+
+          .boxc{
+            border-left: 1px solid #BFACAA;
+          }
+        }
+      }
+    }
+  }
+
+  .subFooter{
+    display: block;
+    width: 100%;
+    padding: 6%;
+    margin-top: 82vh;
+    position: sticky;
+    background: #fff;
+    text-align: center;
+    color: black;
+    z-index: 9000;
+    border-top: 1px solid #e8e8e8;
+
+    font-weight: 400;
+    font-family: 'Nunito Sans', sans-serif;
+    letter-spacing: 2px;
+
+    span{
+      font-weight: 600;
+    }
+  }
+
+
+
+
+
+
 
   .addItemFooter{
     .toolbar{

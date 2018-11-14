@@ -32,7 +32,12 @@
     <div class="itemDetailsWrapper">
       <h1 class="itemName">{{ cardName }}</h1>
       <h2 class="itemWeight">{{cardWeight}}g</h2>
-      <h3 class="itemCost">${{ cardPrice }}</h3>
+      <h3 class="itemCost">${{ adjustedPrice }}</h3>
+      <div class="quanitityGrid">
+        <div class="box boxa" (click)="itemCountDown()"><i class="icon icon-minus"></i></div>
+        <div class="box">{{ itemQuantity }}</div>
+        <div class="box boxc" (click)="itemCountUp()"><i class="icon icon-plus"></i></div>
+      </div>
       <hr class="bottomSlash" />
 
       <p class="itemDescription">{{ cardDesc }}</p>

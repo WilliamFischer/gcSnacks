@@ -7,9 +7,31 @@
 
 
 <ion-content class="coreWrapper">
+  <div class="emptyLabel" *ngIf="emptyCart">
+    Your cart is empty
+  </div>
+  <div class="shoppingMenu"  *ngIf="!paymentMode">
+    <div class="menuItem" *ngFor="let cartItem of cartItems" >
+      <img [src]="cartItem.img" class="cartImg"/>
+      <div class="rightSideContent">
+        <h1 class="itemCartName">{{ cartItem.item }}</h1>
+        <h2 class="itemCartPrice">${{ cartItem.amount }}</h2>
 
+        <div class="quanitityGrid">
+          <div class="box boxa" (click)="itemCardDown()"><i class="icon icon-minus"></i></div>
+          <div class="box">{{ cartItem.quanitity }}</div>
+          <div class="box boxc" (click)="itemCardUp()"><i class="icon icon-plus"></i></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </ion-content>
 
+
+<div class="subFooter" *ngIf="total > 0">
+  Total (4) : <span>${{total}}</span>
+</div>
 
 <ion-footer class="addItemFooter" *ngIf="paymentMode" (click)="placeOrder()">
   <ion-toolbar>

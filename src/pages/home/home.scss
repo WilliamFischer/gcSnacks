@@ -214,11 +214,37 @@ page-home {
 
     .itemCost{
       float: right;
-      margin-top: -18%;
+      margin-top: -22%;
       font-size: 16px;
       font-weight: 600;
       color: #22223B;
 
+    }
+
+    .quanitityGrid{
+      width: 100px;
+      height: 30px;
+      display: inline-flex;
+      float: right;
+      margin-top: -11%;
+      border: 1px solid #BFACAA;
+
+
+      .box{
+        width: 33%;
+        text-align: center;
+        padding-top: 5%;
+        color: #BFACAA;
+        font-family: 'Nunito Sans', sans-serif;
+      }
+
+      .boxa{
+        border-right: 1px solid #BFACAA;
+      }
+
+      .boxc{
+        border-left: 1px solid #BFACAA;
+      }
     }
 
     .bottomSlash{
