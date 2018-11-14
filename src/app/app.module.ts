@@ -23,6 +23,10 @@ import { firebaseConfig } from './credentials';
 
 import { AuthProvider } from '../providers/auth/auth';
 
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { Facebook } from '@ionic-native/facebook';
+
+
 @NgModule({
   declarations: [
     MyApp,
@@ -52,7 +56,9 @@ import { AuthProvider } from '../providers/auth/auth';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthProvider
+    AuthProvider,
+    InAppBrowser,
+    Facebook
   ]
 })
 export class AppModule {}
