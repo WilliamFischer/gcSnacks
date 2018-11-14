@@ -22,7 +22,7 @@ export class LoginPage {
 
   facebookLogin(){
     this.authService.loginWithFacebook().then(res=>{
-      console.log("SUCCESS")
+      console.log("SUCCESS");
       this.navCtrl.setRoot(HomePage);
     }).catch(err=>{
       console.log(err)
@@ -31,7 +31,7 @@ export class LoginPage {
 
   googleLogin(){
     this.authService.loginWithGoogle().then(res=>{
-      console.log("SUCCESS")
+      console.log("SUCCESS");
       this.navCtrl.setRoot(HomePage);
     }).catch(err=>{
       console.log(err)

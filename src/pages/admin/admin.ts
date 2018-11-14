@@ -20,7 +20,6 @@ export class AdminPage {
   specificSnack: any;
   allItems: any;
   item = {
-    id: '',
     name: '',
     category: '',
     price: '',
@@ -41,7 +40,6 @@ export class AdminPage {
   addItem(){
     this.specificSnack = this.fireStore.doc<any>('snacks/' + this.item.name);
     this.specificSnack.set({
-      id: this.item.id,
       name: this.item.name,
       category: this.item.category,
       price: this.item.price,

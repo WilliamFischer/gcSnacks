@@ -1,7 +1,7 @@
 
 <div class="topContent">
 
-  <i class="leftIcon topIcon icon-back" (click)="goToHomeMenu()" *ngIf="itemShowing"></i>
+  <i class="leftIcon topIcon backIcoHome icon-back" (click)="goToHomeMenu()" *ngIf="itemShowing"></i>
   <i class="leftIcon topIcon moreIconShuffle icon-more" (click)="morePopover($event)" *ngIf="!itemShowing"></i>
   <i class="leftIcon topIcon icon-cart" *ngIf="!itemShowing" (click)="viewCart()"></i>
   <i class="rightIcon topIcon icon-search" (click)="searchToggle()" *ngIf="!showSearch"></i>
