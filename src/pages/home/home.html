@@ -12,7 +12,7 @@
   <input placeholder="Search snacks..." class="coreSearch"  *ngIf="showSearch"/>
 
   <ul *ngIf="!showSearch">
-    <li (click)="menuNumber(0)" [ngClass]="{ 'active': this.menuValue == 0}">All</li>
+    <li (click)="menuNumber(0)" [ngClass]="{ 'active': this.menuValue == 0}">Recommended</li>
     <li (click)="menuNumber(1)" [ngClass]="{ 'active': this.menuValue == 1}">Chocolate</li>
     <li (click)="menuNumber(2)" [ngClass]="{ 'active': this.menuValue == 2}">Candy</li>
     <!-- <li (click)="menuNumber(3)" [ngClass]="{ 'active': this.menuValue == 3}">Ice Cream</li> -->

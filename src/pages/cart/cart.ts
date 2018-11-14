@@ -12,9 +12,13 @@ import { AngularFireAuth } from '@angular/fire/auth';
 })
 export class CartPage {
   paymentMode: boolean;
-  cartItems: any[];
+  cartItems: any;
   adjustedPrice: any;
   emptyCart: boolean = true;
+  totalPrice:any = 0;
+  cartCount: number = 0;
+  itemQuantity: any;
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl : ViewController,private fireStore: AngularFirestore, public afAuth: AngularFireAuth ) {
   }
@@ -29,6 +33,15 @@ export class CartPage {
           if(this.cartItems.length > 0){
             this.emptyCart = false;
           }
+
+          values.forEach(eachObj => {
+            if(eachObj){
+              this.cartCount = +this.cartCount + +eachObj['quanitity'];
+              this.totalPrice = +this.totalPrice + +eachObj['amount'] + ".00";
+            }
+          });
+
+          console.log(this.totalPrice)
         }
       });
 
@@ -40,29 +53,28 @@ export class CartPage {
 
   confirmPayment(){
     this.paymentMode = true;
+    this.totalPrice = +this.totalPrice + +5 + ".00";
   }
 
   placeOrder(){
     this.viewCtrl.dismiss();
   }
 
-  itemCardDown(){
-
-  }
-
-  itemCardUp(){
-
-  }
-
-  itemCountUp(){
-    var newPrice = +this.adjustedPrice + +this.cartItems.price;
-    this.adjustedPrice = newPrice + '.00';
-  }
-
-  itemCountDown(){
+  itemCardDown(cartItem){
     if(this.cartItems.amount == 1){}else{
       var newPrice = this.adjustedPrice - this.cartItems.price;
       this.adjustedPrice = newPrice + '.00';
     }
+
+    this.itemQuantity = this.fireStore.doc<any>('users/' + this.afAuth.auth.currentUser.uid + '/cart/' + cartItem.item);
+    console.log(this.itemQuantity.quanitity)
+    // this.ItemQuantity.update(this.adjustedPrice)
   }
+
+  itemCardUp(cartItem){
+    var newPrice = +this.adjustedPrice + +this.cartItems.price;
+    this.adjustedPrice = newPrice + '.00';
+  }
+
+
 }

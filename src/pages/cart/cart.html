@@ -18,9 +18,9 @@
         <h2 class="itemCartPrice">${{ cartItem.amount }}</h2>
 
         <div class="quanitityGrid">
-          <div class="box boxa" (click)="itemCardDown()"><i class="icon icon-minus"></i></div>
+          <div class="box boxa" (click)="itemCardDown(cartItem)"><i class="icon icon-minus"></i></div>
           <div class="box">{{ cartItem.quanitity }}</div>
-          <div class="box boxc" (click)="itemCardUp()"><i class="icon icon-plus"></i></div>
+          <div class="box boxc" (click)="itemCardUp(cartItem)"><i class="icon icon-plus"></i></div>
         </div>
 
       </div>
@@ -29,8 +29,8 @@
 </ion-content>
 
 
-<div class="subFooter" *ngIf="total > 0">
-  Total (4) : <span>${{total}}</span>
+<div class="subFooter" *ngIf="totalPrice > 0">
+  Total ({{cartCount}}) : <span>${{totalPrice}}</span>
 </div>
 
 <ion-footer class="addItemFooter" *ngIf="paymentMode" (click)="placeOrder()">
