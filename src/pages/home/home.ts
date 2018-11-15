@@ -11,7 +11,6 @@ import { MorePopoverPage } from '../morePopover';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  menuValue: number = 0;
   showSearch: boolean;
   loading: boolean = false;
 
@@ -27,6 +26,7 @@ export class HomePage {
   cardAmount: number;
   itemQuantity: number = 1;
   adjustedPrice: any;
+  selectedCat: string;
 
   constructor(public navCtrl: NavController,public modalCtrl: ModalController,public popoverCtrl: PopoverController,private fireStore: AngularFirestore, public afAuth: AngularFireAuth,private alertCtrl: AlertController) {
     // this.getSongList()
@@ -43,6 +43,8 @@ export class HomePage {
     console.log("User Access Details:")
     console.log(this.afAuth.auth.currentUser)
 
+    this.selectedCat = 'chocolate';
+
     this.fireStore.doc('users/' + this.afAuth.auth.currentUser.uid).valueChanges().subscribe(
       values =>{
         if(values){
@@ -54,9 +56,9 @@ export class HomePage {
       });
   }
 
+  selectCat(i){
+    this.selectedCat = i;
 
-  menuNumber(key){
-    this.menuValue = key;
     this.itemShowing = null;
     this.itemQuantity = 1;
   }
