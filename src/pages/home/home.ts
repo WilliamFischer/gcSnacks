@@ -56,13 +56,6 @@ export class HomePage {
       });
   }
 
-  selectCat(i){
-    this.selectedCat = i;
-
-    this.itemShowing = null;
-    this.itemQuantity = 1;
-  }
-
   showItemDetails(card){
     this.itemShowing = true;
 
@@ -186,5 +179,12 @@ export class HomePage {
     alert.present();
 
 
+  }
+
+  selectCat(cat){
+    this.selectedCat = cat;
+
+    this.itemShowing = null;
+    this.itemQuantity = 1;
   }
 }

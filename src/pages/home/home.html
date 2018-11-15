@@ -49,8 +49,7 @@
 
     <ion-spinner class="ionSpinner" *ngIf="!loading" name="bubbles"></ion-spinner>
 
-    <div class="cardGrid" *ngIf="this.menuValue == 0 && loading">
-
+    <div class="cardGrid" *ngIf="loading">
       <div class="card" *ngFor="let card of cards"  (click)="showItemDetails(card)" [hidden]="card.category != selectedCat" >
           <img class="snackImg" [src]="card.imgurl" />
           <div class="bottomInfo">
@@ -58,7 +57,6 @@
             <h2 class="snackPrice">${{card.price}} &bull; {{card.weight}}g</h2>
           </div>
       </div>
-
     </div>
   </div>
 
