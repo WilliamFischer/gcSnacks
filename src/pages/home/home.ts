@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController,ModalController,PopoverController,AlertController  } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
-import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder';
+import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder';
 
 import { AngularFirestore,AngularFirestoreCollection } from 'angularfire2/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -69,16 +69,11 @@ export class HomePage {
         }
       });
 
-      let geoOptions: NativeGeocoderOptions = {
-       useLocale: true,
-       maxResults: 5
-      };
-
       this.geolocation.getCurrentPosition().then((resp) => {
 
-        this.nativeGeocoder.reverseGeocode(resp.coords.longitude, resp.coords.latitude, geoOptions)
-          .then((result: NativeGeocoderReverseResult[]) => console.log(JSON.stringify(result[0])))
-          .catch((error: any) => console.log("GeoCode Error: " + error));
+        let lat = resp.coords.longitude;
+        let lng = resp.coords.latitude;
+        this.getAddress(lng, lat)
 
         let date = new Date(this.today);
         let hours = date.getHours();
@@ -100,6 +95,37 @@ export class HomePage {
         console.log('Error getting location', error);
       });
 
+  }
+
+  getAddress(lng, lat){
+
+    let geoOptions: NativeGeocoderOptions = {
+     useLocale: true,
+     maxResults: 5
+    };
+
+    this.nativeGeocoder.reverseGeocode(lng, lat, geoOptions)
+      .then((result: NativeGeocoderReverseResult[]) => {
+        if(result[0].subLocality == 'Gold Coast'){
+          console.log("YOUR ON THE GOLD COAST")
+        }else{
+          console.log('NOT ON THE COAST')
+          let alert = this.alertCtrl.create({
+            title: 'Logging off..',
+            message: 'Sorry :(, Munch is only available for user\'s on the Gold Coast.,',
+            buttons: [{
+                text: 'Okay',
+                handler: () => {
+                  this.afAuth.auth.signOut().then(() => {
+                     this.navCtrl.push(LoginPage)
+                  });
+                }
+              }]
+          });
+          alert.present();
+        }
+      })
+      .catch((error: any) => console.log(error));
   }
 
   showItemDetails(card){
