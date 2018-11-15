@@ -29,6 +29,7 @@ export class HomePage {
   cardDesc: string;
   cardWeight: number;
   cardAmount: number;
+  cardCat: string;
   itemQuantity: number = 1;
   adjustedPrice: any;
   selectedCat: string;
@@ -111,6 +112,7 @@ export class HomePage {
     this.cardDesc = card.desc;
     this.cardWeight = card.weight;
     this.cardAmount = null;
+    this.cardCat = card.category;
 
 
     this.showSearch = false;
@@ -125,6 +127,7 @@ export class HomePage {
     this.cardDesc = null;
     this.cardWeight = null;
     this.cardAmount = null;
+    this.cardCat = null
 
     this.itemQuantity = 1;
   }
@@ -165,6 +168,7 @@ export class HomePage {
     this.cardDesc = null;
     this.cardWeight = null;
     this.cardAmount = null;
+    this.cardCat = null;
 
     this.itemQuantity = 1
   }

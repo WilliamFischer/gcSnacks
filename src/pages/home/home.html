@@ -36,7 +36,7 @@
 
     <div class="itemDetailsWrapper">
       <h1 class="itemName">{{cardName}}</h1>
-      <h2 class="itemWeight">{{cardWeight}}g</h2>
+      <h2 class="itemWeight">{{cardWeight}}<label *ngIf="cardCat != 'drinks'">g</label><label *ngIf="cardCat == 'drinks'">ml</label></h2>
       <h3 class="itemCost">${{ adjustedPrice }}</h3>
       <div class="quanitityGrid">
         <div class="box boxa" (click)="itemCountDown()"><i class="icon icon-minus"></i></div>
@@ -59,7 +59,7 @@
           <img class="snackImg" [src]="card.imgurl" />
           <div class="bottomInfo">
             <h2 class="snackName">{{card.name}}</h2>
-            <h2 class="snackPrice">${{card.price}} &bull; {{card.weight}}g</h2>
+            <h2 class="snackPrice">${{card.price}} &bull; {{card.weight}}<label *ngIf="card.category != 'drinks'">g</label><label *ngIf="card.category == 'drinks'">ml</label></h2>
           </div>
       </div>
     </div>

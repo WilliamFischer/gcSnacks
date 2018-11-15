@@ -1,7 +1,6 @@
 
 <div class="topContent">
-    <h1 *ngIf="!paymentMode">Shopping Cart</h1>
-    <h1 *ngIf="paymentMode">Confirm Payment</h1>
+    <h1>Shopping Cart</h1>
     <i class="rightIcon topCloseIcon topIcon icon-close" (click)="closeCart()"></i>
 </div>
 
@@ -10,7 +9,7 @@
   <ion-spinner name="bubbles" *ngIf="cartLoading" class="cartSpinner"></ion-spinner>
   <div class="emptyLabel" *ngIf="emptyCart">Your cart is empty</div>
 
-  <div class="shoppingMenu"  *ngIf="!paymentMode">
+  <div class="shoppingMenu" >
     <div class="menuItem" *ngFor="let cartItem of cartItems" >
       <img [src]="cartItem.img" class="cartImg"/>
       <div class="rightSideContent">
@@ -27,9 +26,6 @@
     </div>
   </div>
 
-  <div *ngIf="paymentMode">
-    <button (click)="makePayment()">Pay!</button>
-  </div>
 </ion-content>
 
 
@@ -37,13 +33,7 @@
   Total ({{cartCount}}) : <span>${{totalPrice}}</span>
 </div>
 
-<ion-footer class="addItemFooter" *ngIf="paymentMode" (click)="placeOrder()">
-  <ion-toolbar>
-    <ion-title><i class="iconFooter icon-tick"></i></ion-title>
-  </ion-toolbar>
-</ion-footer>
-
-<ion-footer class="addItemFooter" *ngIf="!paymentMode" (click)="confirmPayment()">
+<ion-footer class="addItemFooter" (click)="placeOrder()">
   <ion-toolbar>
     <ion-title><i class="iconFooter icon-tick"></i></ion-title>
   </ion-toolbar>
