@@ -34,7 +34,8 @@ export class LoginPage {
       loading.dismiss();
       this.navCtrl.setRoot(HomePage);
     }).catch(err=>{
-      console.log(err)
+      loading.dismiss();
+      alert(err)
     })
   }
 
@@ -49,7 +50,8 @@ export class LoginPage {
       loading.dismiss();
       this.navCtrl.setRoot(HomePage);
     }).catch(err=>{
-      console.log(err)
+      loading.dismiss();
+      alert(err)
     })
   }
 

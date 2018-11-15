@@ -14,10 +14,11 @@ export class CartPage {
   paymentMode: boolean;
   cartItems: any;
   adjustedPrice: any;
-  emptyCart: boolean = true;
+  emptyCart: boolean = false;
   totalPrice:any = 0;
   cartCount: number = 0;
   itemQuantity: any;
+  cartLoading:boolean  = true;
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl : ViewController,private fireStore: AngularFirestore, public afAuth: AngularFireAuth ) {
@@ -29,10 +30,9 @@ export class CartPage {
     this.fireStore.collection('users/' + this.afAuth.auth.currentUser.uid + '/cart').valueChanges().subscribe(
       values =>{
         if(values){
+          this.cartLoading  = false;
+
           this.cartItems = values;
-          if(this.cartItems.length > 0){
-            this.emptyCart = false;
-          }
 
           values.forEach(eachObj => {
             if(eachObj){
@@ -40,6 +40,10 @@ export class CartPage {
               this.totalPrice = +this.totalPrice + +eachObj['amount'] + ".00";
             }
           });
+
+          if(this.totalPrice == 0){
+            this.emptyCart = true;
+          }
 
           console.log(this.totalPrice)
         }

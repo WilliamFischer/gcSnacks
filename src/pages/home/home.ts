@@ -5,6 +5,7 @@ import { AngularFirestore,AngularFirestoreCollection } from 'angularfire2/firest
 import { AngularFireAuth } from '@angular/fire/auth';
 
 import { MorePopoverPage } from '../morePopover';
+import { LoginPage } from '../login/login';
 
 @Component({
   selector: 'page-home',
@@ -40,8 +41,14 @@ export class HomePage {
   }
 
   ionViewDidLoad(){
-    console.log("User Access Details:")
-    console.log(this.afAuth.auth.currentUser)
+    if(!this.afAuth.auth.currentUser){
+      this.afAuth.auth.signOut().then(() => {
+         this.navCtrl.push(LoginPage)
+      });
+    }else{
+      console.log("User Access Details:")
+      console.log(this.afAuth.auth.currentUser)
+    }
 
     this.selectedCat = 'chocolate';
 
@@ -171,7 +178,8 @@ export class HomePage {
               email: this.afAuth.auth.currentUser.email
             })
 
-            console.log("User Successfully added")
+            console.log("User Successfully added");
+            window.location.reload();
           }
         }
       ]

@@ -7,9 +7,9 @@
 
 
 <ion-content class="coreWrapper">
-  <div class="emptyLabel" *ngIf="emptyCart">
-    Your cart is empty
-  </div>
+  <ion-spinner name="bubbles" *ngIf="cartLoading" class="cartSpinner"></ion-spinner>
+  <div class="emptyLabel" *ngIf="emptyCart">Your cart is empty</div>
+
   <div class="shoppingMenu"  *ngIf="!paymentMode">
     <div class="menuItem" *ngFor="let cartItem of cartItems" >
       <img [src]="cartItem.img" class="cartImg"/>

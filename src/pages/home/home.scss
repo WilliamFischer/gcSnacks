@@ -69,7 +69,7 @@ page-home {
       list-style: none;
       margin-top: 7%;
       width: 100vw;
-      overflow-x: auto;
+      overflow-x: scroll;
       overflow-y: hidden;
       display: flex;
       -webkit-overflow-scrolling:touch;
@@ -99,6 +99,11 @@ page-home {
       .spaceHere{
         border: none;
       }
+    }
+
+    ul::-webkit-scrollbar{
+        width: 0px !important;
+        background: transparent !important;
     }
 
     .coreSearch{
