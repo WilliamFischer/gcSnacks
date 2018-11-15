@@ -22,6 +22,7 @@ export class HomePage {
   userSaveLocation: any;
   userCart: any;
   itemShowing: boolean = false;
+  quantityTrigger: boolean;
   snackTime: boolean;
   cardName: string;
   cardImg: string;
@@ -196,7 +197,8 @@ export class HomePage {
     this.cardAmount = null;
     this.cardCat = null;
 
-    this.itemQuantity = 1
+    this.itemQuantity = 1;
+    this.quantityTrigger = true;
   }
 
   viewCart(){
@@ -206,16 +208,22 @@ export class HomePage {
   }
 
   itemCountUp(){
+    this.quantityTrigger = true;
+
     this.itemQuantity++
     var newPrice = +this.adjustedPrice + +this.cardPrice;
-    this.adjustedPrice = newPrice + '.00';
+    var cutPrice = Number(newPrice).toFixed(2);
+    this.adjustedPrice = cutPrice;
   }
 
   itemCountDown(){
+    this.quantityTrigger = true;
+
     if(this.itemQuantity == 1){}else{
       this.itemQuantity--;
       var newPrice = this.adjustedPrice - this.cardPrice;
-      this.adjustedPrice = newPrice + '.00';
+      var cutPrice = Number(newPrice).toFixed(2);
+      this.adjustedPrice = cutPrice;
     }
   }
 
