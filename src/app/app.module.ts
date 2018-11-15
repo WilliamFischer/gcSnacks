@@ -3,6 +3,9 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import { Geolocation } from '@ionic-native/geolocation';
+import { NativeGeocoder } from '@ionic-native/native-geocoder';
+import { PayPal } from '@ionic-native/paypal';
 
 import { MyApp } from './app.component';
 
@@ -41,7 +44,7 @@ import { Facebook } from '@ionic-native/facebook';
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule,
-   AngularFireAuthModule
+    AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -55,10 +58,13 @@ import { Facebook } from '@ionic-native/facebook';
   providers: [
     StatusBar,
     SplashScreen,
+    Geolocation,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
     InAppBrowser,
-    Facebook
+    Facebook,
+    NativeGeocoder,
+    PayPal
   ]
 })
 export class AppModule {}

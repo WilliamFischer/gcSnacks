@@ -17,20 +17,25 @@
     <li (click)="selectCat('candy')" [ngClass]="{ 'active': this.selectedCat == 'candy'}">Candy</li>
     <!-- <li (click)="menuNumber(3)" [ngClass]="{ 'active': this.menuValue == 3}">Ice Cream</li> -->
     <li (click)="selectCat('chips')" [ngClass]="{ 'active': this.selectedCat == 'chips'}">Chips</li>
-    <li (click)="selectCat(5)" [ngClass]="{ 'active': this.selectedCat == 5}">Jerky n' Nuts</li>
+    <!-- <li (click)="selectCat(5)" [ngClass]="{ 'active': this.selectedCat == 5}">Jerky n' Nuts</li> -->
     <li (click)="selectCat('drinks')" [ngClass]="{ 'active': this.selectedCat == 'drinks'}">Drinks</li>
+    <li (click)="selectCat('bundle')" [ngClass]="{ 'active': this.selectedCat == 'bundle'}">Bundles</li>
     <li class="spaceHere"></li>
   </ul>
 </div>
 
-<ion-content class="coreWrapper">
+<div class="snackTimeBanner" *ngIf="snackTime">
+   🍫🍪🍩&nbsp;&nbsp; 11pm- 2am everything is 5% off &nbsp;&nbsp;🍩🍪🍫
+</div>
+
+<ion-content class="coreWrapper" [ngClass]="{ 'bannerPush': snackTime }">
   <div class="oneItem" *ngIf="itemShowing">
     <div class="itemImageWrapper">
       <img class="itemImage" [src]="cardImg" />
     </div>
 
     <div class="itemDetailsWrapper">
-      <h1 class="itemName">cheese</h1>
+      <h1 class="itemName">{{cardName}}</h1>
       <h2 class="itemWeight">{{cardWeight}}g</h2>
       <h3 class="itemCost">${{ adjustedPrice }}</h3>
       <div class="quanitityGrid">

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController,ModalController,PopoverController,AlertController  } from 'ionic-angular';
+import { Geolocation } from '@ionic-native/geolocation';
+import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder';
 
 import { AngularFirestore,AngularFirestoreCollection } from 'angularfire2/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -12,6 +14,7 @@ import { LoginPage } from '../login/login';
   templateUrl: 'home.html'
 })
 export class HomePage {
+  today= new Date();
   showSearch: boolean;
   loading: boolean = false;
 
@@ -19,6 +22,7 @@ export class HomePage {
   userSaveLocation: any;
   userCart: any;
   itemShowing: boolean = false;
+  snackTime: boolean;
   cardName: string;
   cardImg: string;
   cardPrice: number;
@@ -29,7 +33,7 @@ export class HomePage {
   adjustedPrice: any;
   selectedCat: string;
 
-  constructor(public navCtrl: NavController,public modalCtrl: ModalController,public popoverCtrl: PopoverController,private fireStore: AngularFirestore, public afAuth: AngularFireAuth,private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController,public modalCtrl: ModalController,public popoverCtrl: PopoverController,private fireStore: AngularFirestore, public afAuth: AngularFireAuth,private alertCtrl: AlertController,private geolocation: Geolocation,private nativeGeocoder: NativeGeocoder) {
     // this.getSongList()
 
     this.fireStore.collection('snacks').valueChanges().subscribe(
@@ -37,6 +41,8 @@ export class HomePage {
         this.cards = values
         this.loading = true
         console.log('Database Loaded')
+
+
       });
   }
 
@@ -61,6 +67,38 @@ export class HomePage {
           this.createUserDB();
         }
       });
+
+      let geoOptions: NativeGeocoderOptions = {
+       useLocale: true,
+       maxResults: 5
+      };
+
+      this.geolocation.getCurrentPosition().then((resp) => {
+
+        this.nativeGeocoder.reverseGeocode(resp.coords.longitude, resp.coords.latitude, geoOptions)
+          .then((result: NativeGeocoderReverseResult[]) => console.log(JSON.stringify(result[0])))
+          .catch((error: any) => console.log("GeoCode Error: " + error));
+
+        let date = new Date(this.today);
+        let hours = date.getHours();
+        let minutes = date.getMinutes();
+        let seconds = date.getSeconds();
+
+        if(hours == 23 || hours ==  0 || hours ==  1 || hours ==  2 || hours == 3 ){
+          this.snackTime = true;
+
+          setTimeout(a=>{
+            this.snackTime = false;
+          },15000,[]);
+
+        }else{
+          this.snackTime = false;
+        }
+
+      }).catch((error) => {
+        console.log('Error getting location', error);
+      });
+
   }
 
   showItemDetails(card){

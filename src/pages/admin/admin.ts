@@ -48,6 +48,7 @@ export class AdminPage {
       imgurl: this.item.imgurl,
     })
 
+    alert('item added')
   }
 
   goHome(){
