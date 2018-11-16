@@ -43,9 +43,8 @@ export class HomePage {
         this.cards = values
         this.loading = true
         console.log('Database Loaded')
-
-
       });
+
   }
 
   ionViewDidLoad(){
@@ -109,6 +108,7 @@ export class HomePage {
       .then((result: NativeGeocoderReverseResult[]) => {
         if(result[0].subLocality == 'Gold Coast'){
           console.log("YOUR ON THE GOLD COAST")
+          localStorage.setItem('address', result[0].subLocality);
         }else{
           console.log('NOT ON THE COAST')
           let alert = this.alertCtrl.create({
@@ -126,7 +126,10 @@ export class HomePage {
           alert.present();
         }
       })
-      .catch((error: any) => console.log(error));
+      .catch((error: any) => {
+        console.log(error)
+        localStorage.setItem('address', '1 Stratie Drive Robina');
+      });
   }
 
   showItemDetails(card){

@@ -19,6 +19,7 @@ export class CartPage {
   cartCount: number = 0;
   itemQuantity: any;
   cartLoading:boolean  = true;
+  userAddress: string;
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl : ViewController,private fireStore: AngularFirestore, public afAuth: AngularFireAuth,private payPal: PayPal ) {
@@ -28,48 +29,65 @@ export class CartPage {
     console.log('ionViewDidLoad CartPage');
 
     this.fireStore.collection('users/' + this.afAuth.auth.currentUser.uid + '/cart').valueChanges().subscribe(
-      values =>{
-        if(values){
+    values =>{
+      if(values){
+        this.cartItems = values;
 
-          this.cartItems = values;
+        values.forEach(eachObj => {
+          this.calculateTotal(eachObj['amount'], eachObj['quanitity']);
+        });
 
-          values.forEach(eachObj => {
-            if(eachObj){
-              this.cartCount = +this.cartCount + +eachObj['quanitity'];
-              this.totalPrice = +this.totalPrice + +eachObj['amount'];
-            }
-          });
-
-          if(this.totalPrice == 0){
-            this.cartLoading  = false;
-            this.emptyCart = true;
-          }else{
-            this.cartLoading  = false;
-          }
+        if(this.totalPrice == 0){
+          this.cartLoading  = false;
+          this.emptyCart = true;
+        }else{
+          this.cartLoading  = false;
         }
-      });
+      }
+    });
 
+
+    this.userAddress = localStorage.getItem('address');
+    console.log(this.userAddress);
   }
 
   closeCart(){
     this.viewCtrl.dismiss();
   }
 
-  // itemCardDown(cartItem){
-  //   if(this.cartItems.amount == 1){}else{
-  //     var newPrice = this.adjustedPrice - this.cartItems.price;
-  //     this.adjustedPrice = newPrice + '.00';
-  //   }
-  //
-  //   this.itemQuantity = this.fireStore.doc<any>('users/' + this.afAuth.auth.currentUser.uid + '/cart/' + cartItem.item);
-  //   console.log(this.itemQuantity.quanitity)
-  //   // this.ItemQuantity.update(this.adjustedPrice)
-  // }
-  //
-  // itemCardUp(cartItem){
-  //   var newPrice = +this.adjustedPrice + +this.cartItems.price;
-  //   this.adjustedPrice = newPrice + '.00';
-  // }
+  itemCardDown(cartItem){
+    this.totalPrice = 0;
+    this.cartCount = 0;
+
+    var newAmount = cartItem.amount - cartItem.price;
+    var newQuantity = cartItem.quanitity - 1;
+    var cartSource = this.fireStore.doc<any>('users/' + this.afAuth.auth.currentUser.uid + '/cart/' + cartItem.item);
+
+    cartSource.update({amount:newAmount, quanitity:newQuantity});
+
+    if(newQuantity == 0){
+      cartSource.delete();
+    }
+  }
+
+  itemCardUp(cartItem){
+    this.totalPrice = 0;
+    this.cartCount = 0;
+
+    var newAmount = +cartItem.amount + +cartItem.price;
+    var newQuantity = +cartItem.quanitity + 1;
+    var cartSource = this.fireStore.doc<any>('users/' + this.afAuth.auth.currentUser.uid + '/cart/' + cartItem.item);
+
+    cartSource.update({amount:newAmount, quanitity:newQuantity});
+  }
+
+  calculateTotal(amount, quanitity){
+      if(amount && quanitity){
+        this.cartCount = +this.cartCount + +quanitity;
+        this.totalPrice = +this.totalPrice + +amount;
+        console.log("Cart now " + quanitity + " items full and " + amount)
+      }
+  }
 
 
   placeOrder(){

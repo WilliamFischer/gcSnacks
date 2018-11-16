@@ -140,7 +140,7 @@ page-cart {
     display: block;
     width: 100%;
     padding: 6%;
-    margin-top: 82vh;
+    margin-top: 75.5vh;
     position: sticky;
     background: #fff;
     text-align: center;
@@ -152,7 +152,31 @@ page-cart {
     font-family: 'Nunito Sans', sans-serif;
     letter-spacing: 2px;
 
+    transition: all 4s ease-in-out;
+
     span{
+      font-weight: 600;
+    }
+  }
+
+  .subFooter2{
+    display: block;
+    width: 100%;
+    padding: 3%;
+    margin-top: 0vh;
+    position: sticky !important;
+    background: #fff;
+    text-align: center;
+    color: #8e8e8e;
+    z-index: 9000;
+    border-top: 1px solid #e8e8e8;
+
+    font-weight: 300;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 12px;
+
+    span{
+      color: #457B9D;
       font-weight: 600;
     }
   }

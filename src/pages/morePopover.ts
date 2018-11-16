@@ -9,11 +9,11 @@ import { AdminPage } from './admin/admin';
 @Component({
   template: `
     <ion-list class="popoverList">
-      <ion-list-header>Munch</ion-list-header>
-      <button ion-item (click)="close()">Settings</button>
-      <button ion-item (click)="logOut()">Log Out</button>
-      <button ion-item (click)="close()">Legal</button>
-      <button ion-item (click)="triggerAdmin()">Admin</button>
+      <ion-list-header class="popoverTitle">Munch</ion-list-header>
+      <button ion-item (click)="close()" class="popoverItem topPopoverItem">Settings</button>
+      <button ion-item (click)="logOut()" class="popoverItem">Log Out</button>
+      <button ion-item (click)="close()" class="popoverItem">Legal</button>
+      <button ion-item (click)="triggerAdmin()" class="popoverItem">Admin</button>
     </ion-list>
   `
 })

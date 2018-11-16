@@ -33,6 +33,10 @@
   Total ({{cartCount}}) : <span>${{totalPrice}}</span>
 </div>
 
+<div class="subFooter2" *ngIf="totalPrice > 0">
+  Delivering to <span>{{userAddress}}</span>
+</div>
+
 <ion-footer class="addItemFooter" (click)="placeOrder()">
   <ion-toolbar>
     <ion-title><i class="iconFooter icon-tick"></i></ion-title>
