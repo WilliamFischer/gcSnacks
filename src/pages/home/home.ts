@@ -36,38 +36,6 @@ export class HomePage {
   selectedCat: string;
 
   constructor(public navCtrl: NavController,public modalCtrl: ModalController,public popoverCtrl: PopoverController,private fireStore: AngularFirestore, public afAuth: AngularFireAuth,private alertCtrl: AlertController,private geolocation: Geolocation,private nativeGeocoder: NativeGeocoder) {
-    // this.getSongList()
-
-    this.fireStore.collection('snacks').valueChanges().subscribe(
-      values =>{
-        this.cards = values
-        this.loading = true
-        console.log('Database Loaded')
-      });
-
-  }
-
-  ionViewDidLoad(){
-    if(!this.afAuth.auth.currentUser){
-      this.afAuth.auth.signOut().then(() => {
-         this.navCtrl.push(LoginPage)
-      });
-    }else{
-      console.log("User Access Details:")
-      console.log(this.afAuth.auth.currentUser)
-    }
-
-    this.selectedCat = 'chocolate';
-
-    this.fireStore.doc('users/' + this.afAuth.auth.currentUser.uid).valueChanges().subscribe(
-      values =>{
-        if(values){
-          var userName = this.afAuth.auth.currentUser.displayName;
-          console.log("Welcome back " + userName)
-        }else{
-          this.createUserDB();
-        }
-      });
 
       this.geolocation.getCurrentPosition().then((resp) => {
 
@@ -94,6 +62,37 @@ export class HomePage {
       }).catch((error) => {
         console.log('Error getting location', error);
       });
+  }
+
+  ionViewDidLoad(){
+    if(!this.afAuth.auth.currentUser){
+      this.afAuth.auth.signOut().then(() => {
+         this.navCtrl.push(LoginPage)
+      });
+    }else{
+      console.log("User Access Details:")
+      console.log(this.afAuth.auth.currentUser)
+
+
+      this.fireStore.collection('snacks').valueChanges().subscribe(
+        values =>{
+          this.cards = values
+          this.loading = true
+          console.log('Database Loaded')
+        });
+
+        this.selectedCat = 'chocolate';
+
+        this.fireStore.doc('users/' + this.afAuth.auth.currentUser.uid).valueChanges().subscribe(
+        values =>{
+          if(values){
+            var userName = this.afAuth.auth.currentUser.displayName;
+            console.log("Welcome back " + userName)
+          }else{
+            this.createUserDB();
+          }
+        });
+    }
 
   }
 
@@ -107,8 +106,9 @@ export class HomePage {
     this.nativeGeocoder.reverseGeocode(lng, lat, geoOptions)
       .then((result: NativeGeocoderReverseResult[]) => {
         if(result[0].subLocality == 'Gold Coast'){
-          console.log("YOUR ON THE GOLD COAST")
-          localStorage.setItem('address', result[0].subLocality);
+          console.log("YOUR ON THE GOLD COAST");
+          var userAddress = result[0].subThoroughfare + " " + result[0].thoroughfare + ", " + result[0].locality + " (" + result[0].postalCode + ")";
+          localStorage.setItem('address', userAddress);
         }else{
           console.log('NOT ON THE COAST')
           let alert = this.alertCtrl.create({
