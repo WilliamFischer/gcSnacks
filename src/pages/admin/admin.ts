@@ -26,10 +26,27 @@ export class AdminPage {
     weight: '',
     desc: '',
     imgurl: ''
-  }
+  };
+  addSnack: boolean;
+  deliveries: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public fireStore: AngularFirestore) {
 
+
+    var delArray = [];
+
+    this.fireStore.collection('deliveries').valueChanges().subscribe(values =>{
+
+      values.forEach(eachObj => {
+        var deliveriesSource = this.fireStore.collection<any>('deliveries/' + eachObj.time + '/cart').valueChanges().subscribe(
+        values =>{
+          delArray.push(values)
+        });
+      });
+
+      this.deliveries = delArray;
+      console.log(this.deliveries)
+    });
   }
 
   ionViewDidLoad() {
@@ -53,5 +70,12 @@ export class AdminPage {
 
   goHome(){
     this.navCtrl.push(HomePage);
+  }
+
+  snackAdd(){
+    this.addSnack = true;
+  }
+  noSnackAdd(){
+    this.addSnack = false;
   }
 }

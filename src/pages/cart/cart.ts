@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { ViewController } from 'ionic-angular';
+import { IonicPage, ViewController, NavController, NavParams,ModalController } from 'ionic-angular';
 import { PayPal, PayPalPayment, PayPalConfiguration } from '@ionic-native/paypal';
-
 import { AngularFirestore,AngularFirestoreCollection } from 'angularfire2/firestore';
+
 import { AngularFireAuth } from '@angular/fire/auth';
 
 @IonicPage()
@@ -20,9 +19,17 @@ export class CartPage {
   itemQuantity: any;
   cartLoading:boolean  = true;
   userAddress: string;
+  deliverLocation: any;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl : ViewController,private fireStore: AngularFirestore, public afAuth: AngularFireAuth,private payPal: PayPal ) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public viewCtrl : ViewController,
+    private fireStore: AngularFirestore,
+    public afAuth: AngularFireAuth,
+    private payPal: PayPal,
+    public modalCtrl: ModalController ) {
   }
 
   ionViewDidLoad() {
@@ -92,6 +99,8 @@ export class CartPage {
 
   placeOrder(){
 
+
+
     if(this.totalPrice != 0){
       this.cartLoading  = false;
       this.emptyCart = false;
@@ -107,6 +116,40 @@ export class CartPage {
           this.payPal.renderSinglePaymentUI(payment).then(() => {
             alert("Succefully Paid")
             this.viewCtrl.dismiss();
+
+            var today = new Date();
+            let hours = today.getHours();
+            let minutes = today.getMinutes();
+            let seconds = today.getSeconds();
+            let milliseconds = today.getMilliseconds();
+            var finalTime = hours + ":" + minutes + ":" + seconds + ":" + milliseconds;
+
+            this.deliverLocation = this.fireStore.doc<any>('deliveries/' + finalTime);
+            this.deliverLocation.set({
+              totalCost: this.totalPrice + +5 + '.00',
+              approved: false,
+              time: finalTime
+            })
+
+            var cartSource = this.fireStore.collection<any>('users/' + this.afAuth.auth.currentUser.uid + '/cart').valueChanges().subscribe(
+            values =>{
+              values.forEach(eachObj => {
+                console.log(eachObj)
+                var deliverLocation = this.fireStore.doc<any>('deliveries/' + finalTime + '/cart/' + eachObj.item);
+                deliverLocation.set({
+                  cart: {
+                    item: eachObj.item,
+                    price: eachObj.price,
+                    imgurl: eachObj.img
+                  }
+                })
+
+              });
+            })
+
+            var modalPage = this.modalCtrl.create('OrderPage');
+            modalPage.present();
+
           }, (err) => {
             console.log("Error " + err)
           });

@@ -35,7 +35,6 @@ import { Facebook } from '@ionic-native/facebook';
     MyApp,
     LoginPage,
     HomePage,
-    OrderPage,
     AdminPage,
     MorePopoverPage
   ],
@@ -51,7 +50,6 @@ import { Facebook } from '@ionic-native/facebook';
     MyApp,
     LoginPage,
     HomePage,
-    OrderPage,
     AdminPage,
     MorePopoverPage
   ],
