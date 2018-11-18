@@ -99,69 +99,69 @@ export class CartPage {
 
   placeOrder(){
 
+    var today = new Date();
+    let hours = today.getHours();
+    let minutes = today.getMinutes();
+    let seconds = today.getSeconds();
+    let milliseconds = today.getMilliseconds();
+    var finalTime = hours + ":" + minutes + ":" + seconds + ":" + milliseconds;
 
+    this.deliverLocation = this.fireStore.doc<any>('deliveries/' + finalTime);
+    this.deliverLocation.set({
+      totalCost: this.totalPrice + +5 + '.00',
+      approved: false,
+      time: finalTime
+    })
 
-    if(this.totalPrice != 0){
-      this.cartLoading  = false;
-      this.emptyCart = false;
+    var cartSource = this.fireStore.collection<any>('users/' + this.afAuth.auth.currentUser.uid + '/cart').valueChanges().subscribe(
+    values =>{
+      values.forEach(eachObj => {
+        console.log(eachObj)
+        var deliverLocation = this.fireStore.doc<any>('deliveries/' + finalTime + '/cart/' + eachObj.item);
+        deliverLocation.set({
+          cart: {
+            item: eachObj.item,
+            price: eachObj.price,
+            imgurl: eachObj.img
+          }
+        })
 
-      this.payPal.init({
-        PayPalEnvironmentProduction: 'AR7AHIWIta7z7My5KPOOhkVSFOwVkqdJkrdqoOoTSu68Lvvk2nHn9W9ieE0Odz1jUxrFLF_DccykOGL4',
-        PayPalEnvironmentSandbox: 'AQ0uWcu6H4jcvb1MYNt3t3dbhIklQ5luDk_9A3pQtRa6RI1KN7cvkHrT2enUeii2zhjuiO6gV0B46_ad'
-        }).then(() => {
-        this.payPal.prepareToRender('PayPalEnvironmentProduction', new PayPalConfiguration({
-        })).then(() => {
-          let paymentAmount = this.totalPrice + +5 + '.00';
-          let payment = new PayPalPayment(paymentAmount, 'AUD', 'Munch Order + $5 Delivery Fee', 'sale');
-          this.payPal.renderSinglePaymentUI(payment).then(() => {
-            alert("Succefully Paid")
-            this.viewCtrl.dismiss();
+      });
+    })
 
-            var today = new Date();
-            let hours = today.getHours();
-            let minutes = today.getMinutes();
-            let seconds = today.getSeconds();
-            let milliseconds = today.getMilliseconds();
-            var finalTime = hours + ":" + minutes + ":" + seconds + ":" + milliseconds;
+    var modalPage = this.modalCtrl.create('OrderPage');
+    modalPage.present();
 
-            this.deliverLocation = this.fireStore.doc<any>('deliveries/' + finalTime);
-            this.deliverLocation.set({
-              totalCost: this.totalPrice + +5 + '.00',
-              approved: false,
-              time: finalTime
-            })
-
-            var cartSource = this.fireStore.collection<any>('users/' + this.afAuth.auth.currentUser.uid + '/cart').valueChanges().subscribe(
-            values =>{
-              values.forEach(eachObj => {
-                console.log(eachObj)
-                var deliverLocation = this.fireStore.doc<any>('deliveries/' + finalTime + '/cart/' + eachObj.item);
-                deliverLocation.set({
-                  cart: {
-                    item: eachObj.item,
-                    price: eachObj.price,
-                    imgurl: eachObj.img
-                  }
-                })
-
-              });
-            })
-
-            var modalPage = this.modalCtrl.create('OrderPage');
-            modalPage.present();
-
-          }, (err) => {
-            console.log("Error " + err)
-          });
-        }, (err) => {
-          console.log("Config Error " + err)
-        });
-        }, (err) => {
-          console.log("Setup Error " + err)
-        });
-    }else{
-      alert('Your cart is empty')
-    }
+  //   if(this.totalPrice != 0){
+  //     this.cartLoading  = false;
+  //     this.emptyCart = false;
+  //
+  //     this.payPal.init({
+  //       PayPalEnvironmentProduction: 'AR7AHIWIta7z7My5KPOOhkVSFOwVkqdJkrdqoOoTSu68Lvvk2nHn9W9ieE0Odz1jUxrFLF_DccykOGL4',
+  //       PayPalEnvironmentSandbox: 'AQ0uWcu6H4jcvb1MYNt3t3dbhIklQ5luDk_9A3pQtRa6RI1KN7cvkHrT2enUeii2zhjuiO6gV0B46_ad'
+  //       }).then(() => {
+  //       this.payPal.prepareToRender('PayPalEnvironmentProduction', new PayPalConfiguration({
+  //       })).then(() => {
+  //         let paymentAmount = this.totalPrice + +5 + '.00';
+  //         let payment = new PayPalPayment(paymentAmount, 'AUD', 'Munch Order + $5 Delivery Fee', 'sale');
+  //         this.payPal.renderSinglePaymentUI(payment).then(() => {
+  //           alert("Succefully Paid")
+  //           this.viewCtrl.dismiss();
+  //
+  //
+  //
+  //         }, (err) => {
+  //           console.log("Error " + err)
+  //         });
+  //       }, (err) => {
+  //         console.log("Config Error " + err)
+  //       });
+  //       }, (err) => {
+  //         console.log("Setup Error " + err)
+  //       });
+  //   }else{
+  //     alert('Your cart is empty')
+  //   }
   }
 
 }

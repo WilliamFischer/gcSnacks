@@ -9,6 +9,9 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { MorePopoverPage } from '../morePopover';
 import { LoginPage } from '../login/login';
 
+import * as $ from 'jquery';
+import * as ScrollReveal from '../../assets/scrollreveal.js';
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -62,9 +65,14 @@ export class HomePage {
       }).catch((error) => {
         console.log('Error getting location', error);
       });
-  }
+
+    }
 
   ionViewDidLoad(){
+
+    $('.cardGrid card').css('display', 'none');
+    window.addEventListener('scroll', this.scroll, true);
+
     if(!this.afAuth.auth.currentUser){
       this.afAuth.auth.signOut().then(() => {
          this.navCtrl.push(LoginPage)
@@ -93,8 +101,12 @@ export class HomePage {
           }
         });
     }
-
   }
+
+  scroll = (): void => {
+    $('.card').addClass('fadeIn');
+  };
+
 
   getAddress(lng, lat){
 

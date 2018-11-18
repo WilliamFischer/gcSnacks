@@ -29,25 +29,29 @@ export class AdminPage {
   };
   addSnack: boolean;
   deliveries: any;
+  loader: boolean = true;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public fireStore: AngularFirestore) {
-
 
     var delArray = [];
 
     this.fireStore.collection('deliveries').valueChanges().subscribe(values =>{
-
       values.forEach(eachObj => {
-        var deliveriesSource = this.fireStore.collection<any>('deliveries/' + eachObj.time + '/cart').valueChanges().subscribe(
-        values =>{
+        this.fireStore.collection<any>('deliveries/' + eachObj.time + '/cart').valueChanges().subscribe(values =>{
           delArray.push(values)
         });
       });
-
-      this.deliveries = delArray;
-      console.log(this.deliveries)
     });
+
+    setTimeout(() => {
+      this.loader = false;
+      this.deliveries = delArray;
+    }, 2000);
   }
+
+
+
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AdminPage');

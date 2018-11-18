@@ -71,6 +71,12 @@ page-admin {
     }
   }
 
+  .adminSpinner{
+    text-align: center;
+    margin-top: 50vh;
+    width: 100%;
+  }
+
   .shoppingMenu{
     margin-top: 12%;
     padding: 5%;
@@ -115,6 +121,10 @@ page-admin {
           margin-top: 10%;
 
           font-family: 'Nunito Sans', sans-serif;
+        }
+
+        .itemCartTime{
+          
         }
 
         .quanitityGrid{
