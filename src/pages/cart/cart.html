@@ -4,7 +4,6 @@
     <i class="rightIcon topCloseIcon topIcon icon-close" (click)="closeCart()"></i>
 </div>
 
-
 <ion-content class="coreWrapper">
   <ion-spinner name="bubbles" *ngIf="cartLoading" class="cartSpinner"></ion-spinner>
   <div class="emptyLabel" *ngIf="emptyCart">Your cart is empty</div>
@@ -37,7 +36,7 @@
   Delivering to <span>{{userAddress}}</span>
 </div>
 
-<ion-footer class="addItemFooter" (click)="placeOrder()">
+<ion-footer class="addItemFooter" (click)="placeOrder()" >
   <ion-toolbar>
     <ion-title><i class="iconFooter icon-tick"></i></ion-title>
   </ion-toolbar>
