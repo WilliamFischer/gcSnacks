@@ -73,19 +73,20 @@ page-admin {
 
   .adminSpinner{
     text-align: center;
-    margin-top: 50vh;
+    margin-top: 30vh;
     width: 100%;
   }
 
   .shoppingMenu{
     margin-top: 12%;
-    padding: 5%;
+    padding: 25%;
     padding-bottom: 20vh;
+    padding-right: 0%;
 
     .menuItem{
       width: 100%;
       background: #fff;
-      height: 170px;
+      height: 120px;
       display: inline-flex;
       margin-top: 5%;
       overflow: hidden;
@@ -99,11 +100,11 @@ page-admin {
       .rightSideContent{
         width: 50%;
         height: 100%;
-        text-align: center;
+        text-align: left;
         padding: 7%;
 
         .itemCartName{
-          font-size: 22px;
+          font-size: 18px;
           color: #C9ADA7;
           font-weight: 300;
           white-space: nowrap;
@@ -124,7 +125,7 @@ page-admin {
         }
 
         .itemCartTime{
-          
+
         }
 
         .quanitityGrid{

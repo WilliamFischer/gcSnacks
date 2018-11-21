@@ -29,6 +29,7 @@ export class AdminPage {
   };
   addSnack: boolean;
   deliveries: any;
+  orders: any;
   loader: boolean = true;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public fireStore: AngularFirestore) {
@@ -36,8 +37,9 @@ export class AdminPage {
     var delArray = [];
 
     this.fireStore.collection('deliveries').valueChanges().subscribe(values =>{
+      this.orders = values;
       values.forEach(eachObj => {
-        this.fireStore.collection<any>('deliveries/' + eachObj.time + '/cart').valueChanges().subscribe(values =>{
+        this.fireStore.collection<any>('deliveries/' + eachObj['time'] + '/cart').valueChanges().subscribe(values =>{
           delArray.push(values)
         });
       });

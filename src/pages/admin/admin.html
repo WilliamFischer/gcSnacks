@@ -11,13 +11,19 @@
 
     <ion-spinner name="bubbles" *ngIf="loader" class="adminSpinner"></ion-spinner>
 
-    <div class="shoppingMenu" >
-      <div class="menuItem" *ngFor="let deliverie of deliveries" >
-        <img [src]="deliverie[0].cart.imgurl" class="cartImg"/>
-        <div class="rightSideContent">
-          <h1 class="itemCartName">{{ deliverie[0].cart.item }}</h1>
-          <h2 class="itemCartPrice">${{ deliverie[0].cart.price }}</h2>
-          <h2 class="itemCartTime">${{ deliverie[0].cart.time }}</h2>
+    <div class="coreOrder" *ngFor="let order of orders">
+      {{ order.time }}
+      {{ order.totalCost }}
+      {{ order.approved }}
+
+      <div class="shoppingMenu" >
+        <div class="menuItem" >
+          {{ order.price }}
+          <img [src]="order.price.imgurl" class="cartImg"/>
+          <div class="rightSideContent">
+            <h1 class="itemCartName">{{ order.price.item }}</h1>
+            <h2 class="itemCartPrice">${{ order.price.price }}</h2>
+          </div>
         </div>
       </div>
     </div>

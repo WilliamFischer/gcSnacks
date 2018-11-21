@@ -10,7 +10,6 @@ import { MorePopoverPage } from '../morePopover';
 import { LoginPage } from '../login/login';
 
 import * as $ from 'jquery';
-import * as ScrollReveal from '../../assets/scrollreveal.js';
 
 @Component({
   selector: 'page-home',
