@@ -46,28 +46,48 @@ export class AdminPage {
 
 
     var delArray = [];
+    var delArray2 = [];
 
     this.fireStore.collection('deliveries').valueChanges().subscribe(values =>{
       this.orderValues = values;
+
       values.forEach(eachObj => {
         this.fireStore.collection<any>('deliveries/' + eachObj['time'] + '/cart').valueChanges().subscribe(values =>{
           delArray.push(values)
         });
       });
+
+      if(this.orderValues.length != 0){
+        var orderInterval = setInterval(() => {
+          if(delArray.length != 0){
+            delArray.forEach(delivery => {
+              delivery.forEach(delivery2 => {
+                if(delivery2.cart){
+                  delArray2.push(delivery2.cart)
+                }
+              })
+            });
+            clearInterval(orderInterval);
+          }
+        }, 1000);
+      }else{
+        console.log('No Ordervalues')
+      }
+
     });
 
-    setTimeout(() => {
-      if(delArray.length != 0){
+    var deliveryInterval = setInterval(() => {
+      if(delArray2.length != 0){
         this.loader = false;
-        this.deliveries = delArray;
+        this.deliveries = delArray2;
         this.orders = this.orderValues;
         console.log(this.deliveries)
-      }else{
-        console.log('No DelArray')
-      }
-    }, 5000);
-  }
 
+        clearInterval(deliveryInterval);
+      }
+    }, 1000);
+
+  }
 
   addItem(){
     this.specificSnack = this.fireStore.doc<any>('snacks/' + this.item.name);
