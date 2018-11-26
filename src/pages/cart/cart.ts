@@ -110,7 +110,7 @@ export class CartPage {
     this.deliverLocation.set({
       totalCost: this.totalPrice + +5 + '.00',
       approved: false,
-      time: finalTime
+      time: finalTime,
     })
 
     var cartSource = this.fireStore.collection<any>('users/' + this.afAuth.auth.currentUser.uid + '/cart').valueChanges().subscribe(
@@ -122,7 +122,8 @@ export class CartPage {
           cart: {
             item: eachObj.item,
             price: eachObj.price,
-            imgurl: eachObj.img
+            imgurl: eachObj.img,
+            time: finalTime
           }
         })
 

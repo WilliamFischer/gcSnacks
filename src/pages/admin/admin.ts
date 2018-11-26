@@ -30,25 +30,11 @@ export class AdminPage {
   addSnack: boolean;
   deliveries: any;
   orders: any;
+  orderValues: any;
   loader: boolean = true;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public fireStore: AngularFirestore) {
 
-    var delArray = [];
-
-    this.fireStore.collection('deliveries').valueChanges().subscribe(values =>{
-      this.orders = values;
-      values.forEach(eachObj => {
-        this.fireStore.collection<any>('deliveries/' + eachObj['time'] + '/cart').valueChanges().subscribe(values =>{
-          delArray.push(values)
-        });
-      });
-    });
-
-    setTimeout(() => {
-      this.loader = false;
-      this.deliveries = delArray;
-    }, 2000);
   }
 
 
@@ -57,6 +43,29 @@ export class AdminPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AdminPage');
+
+
+    var delArray = [];
+
+    this.fireStore.collection('deliveries').valueChanges().subscribe(values =>{
+      this.orderValues = values;
+      values.forEach(eachObj => {
+        this.fireStore.collection<any>('deliveries/' + eachObj['time'] + '/cart').valueChanges().subscribe(values =>{
+          delArray.push(values)
+        });
+      });
+    });
+
+    setTimeout(() => {
+      if(delArray.length != 0){
+        this.loader = false;
+        this.deliveries = delArray;
+        this.orders = this.orderValues;
+        console.log(this.deliveries)
+      }else{
+        console.log('No DelArray')
+      }
+    }, 5000);
   }
 
 
