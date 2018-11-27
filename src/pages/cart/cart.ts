@@ -106,7 +106,7 @@ export class CartPage {
 
 
   placeOrder(){
-
+    
     var today = new Date();
     let hours = today.getHours();
     let minutes = today.getMinutes();

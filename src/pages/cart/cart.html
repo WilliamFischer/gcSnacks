@@ -36,7 +36,7 @@
   Delivering to <span>{{userAddress}}</span>
 </div>
 
-<ion-footer class="addItemFooter" (click)="placeOrder()" >
+<ion-footer class="addItemFooter" (click)="placeOrder()" *ngIf="!emptyCart">
   <ion-toolbar>
     <ion-title><i class="iconFooter icon-tick"></i></ion-title>
   </ion-toolbar>

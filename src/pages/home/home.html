@@ -9,7 +9,9 @@
   <h1 class="homeLogo" *ngIf="!itemShowing">Munch</h1>
   <h1 *ngIf="itemShowing">Detail</h1>
 
-  <input placeholder="Search snacks..." class="coreSearch"  *ngIf="showSearch" [(ngModel)]="searchItems"/>
+  <form action=".">
+  <input placeholder="Search snacks..." class="coreSearch"  *ngIf="showSearch" [(ngModel)]="searchItems" type="search"/>
+  </form>
 
   <ul *ngIf="!showSearch">
     <!-- <li (click)="selectCat(0)" [ngClass]="{ 'active': this.selectedCat == 0}">Recommended</li> -->

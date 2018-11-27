@@ -39,30 +39,30 @@ export class AdminPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad AdminPage');
 
-    this.checkOrders();
+
+    this.loader = true;
+    this.noOrders = false;
+
+    this.fireStore.collection('deliveries').valueChanges().subscribe(values =>{
+      this.checkOrders();
+    });
   }
 
   deleteOrder(order){
     var orderSource = this.fireStore.doc<any>('deliveries/' + order.time);
     orderSource.update({alive:false});
-
-    this.checkOrders();
   }
 
   approveOrder(order){
     var orderSource = this.fireStore.doc<any>('deliveries/' + order.time);
     orderSource.update({approved:true});
-
-    this.checkOrders();
   }
 
   cancelOrder(order){
     var orderSource = this.fireStore.doc<any>('deliveries/' + order.time);
     orderSource.update({approved:false});
 
-    console.log('Order Cancelled')
-
-    this.checkOrders();
+    console.log('Order Cancelled');
   }
 
   goHome(){
@@ -90,15 +90,11 @@ export class AdminPage {
     var delArray = [];
     var delArray2 = [];
     var deadCount = 0;
-    this.loader = true;
-    this.noOrders = false;
 
     this.fireStore.collection('deliveries').valueChanges().subscribe(values =>{
       this.orderValues = values;
 
       values.forEach(eachObj => {
-        console.log(eachObj);
-
         if(eachObj['alive'] == false){
           deadCount++
         }
@@ -133,7 +129,7 @@ export class AdminPage {
 
     var deliveryInterval = setInterval(() => {
       if(delArray2.length != 0){
-        console.log(deadCount + " DEADCOUNT VS FINALARRAY " + delArray.length);
+        //console.log(deadCount + " DEADCOUNT VS FINALARRAY " + delArray.length);
 
         if(deadCount == delArray.length){
           console.log('No New Orders')
@@ -145,8 +141,9 @@ export class AdminPage {
 
           this.orders = this.orderValues;
 
-          console.log('Orders Discovered: ')
-          console.log(this.orders);
+          // console.log('Orders Discovered: ')
+          // console.log(this.orders);
+          this.noOrders = false;
         }
 
         clearInterval(deliveryInterval);
