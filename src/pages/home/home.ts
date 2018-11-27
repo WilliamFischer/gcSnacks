@@ -79,11 +79,10 @@ export class HomePage {
     }else{
       console.log("User Access Details:")
 
-      var userDetails = this.afAuth.auth.currentUser.displayName;
-      localStorage.setItem('userName', userDetails);
-
-      console.log(userDetails);
-
+      var userDetailsName = this.afAuth.auth.currentUser.displayName;
+      var userDetailsID = this.afAuth.auth.currentUser.uid;
+      localStorage.setItem('userName', userDetailsName);
+      localStorage.setItem('userID', userDetailsID);
 
       this.fireStore.collection('snacks').valueChanges().subscribe(
         values =>{

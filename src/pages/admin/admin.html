@@ -10,26 +10,49 @@
     <button class="snackAdd" (click)="snackAdd()">Add Snack</button>
 
     <ion-spinner name="bubbles" *ngIf="loader" class="adminSpinner"></ion-spinner>
+    <h1 class="noOrders" *ngIf="noOrders">No New Orders</h1>
 
-    <div class="shoppingMenu"  *ngFor="let order of orders">
+    <div *ngIf="!loader && !noOrders">
+      <h1 class="adminTitleOrder">Customer Orders</h1>
 
-      <ul>
-        <li>Order Time: <b>{{ order.time }}</b></li>
-        <li>Order Address: <b>{{ order.address }}</b></li>
-        <li>Order From: <b>{{ order.username }}</b></li>
-        <li>Total Cost: <b>${{ order.totalCost }}</b></li>
-      </ul>
+      <div class="shoppingMenu" *ngFor="let order of orders; index as i" [hidden]="order.alive == false">
+        <h2 class="orderID">Order #{{i}}</h2>
+        <ul>
+          <li>Order Time: <b>{{ order.time }}</b></li>
+          <li>Order Address: <b>{{ order.address }}</b></li>
+          <li>Order From: <b>{{ order.username }}</b></li>
+          <li>Total Cost: <b>${{ order.totalCost }}</b></li>
+        </ul>
 
-      <div class="menuItem" *ngFor="let deliverie of deliveries"  [hidden]="deliverie.time != order.time">
-        <img [src]="deliverie.imgurl" class="cartImg"/>
-        <div class="rightSideContent">
-          <h1 class="itemCartName">{{ deliverie.item }}</h1>
-          <h2 class="itemCartPrice">${{ deliverie.price }}</h2>
+        <div class="optionsMenu" *ngIf="!order.approved">
+            <div class="side" (click)="deleteOrder(order)">
+              <i class="icon icon-close"></i>
+            </div>
+            <div class="side right" (click)="approveOrder(order)">
+              <i class="icon icon-tick"></i>
+            </div>
         </div>
+
+        <div class="finishOrderMenu" *ngIf="order.approved">
+            COMPLETE DELIVERY
+        </div>
+
+        <ul class="completeOptions" *ngIf="order.approved">
+          <li style="background: #182C61;">Call Driver</li>
+          <li style="background: #FEA47F" (click)="cancelOrder(order)">Cancel Order</li>
+          <li style="background: #FD7272;">Delete Order</li>
+        </ul>
+
+        <div class="menuItem">
+          <img [src]="deliverie.imgurl" class="cartImg"  *ngFor="let deliverie of deliveries"  [hidden]="deliverie.time != order.time"/>
+          <!-- <div class="rightSideContent">
+            <h1 class="itemCartName">{{ deliverie.item }}</h1>
+            <h2 class="itemCartPrice">${{ deliverie.price }}</h2>
+          </div> -->
+        </div>
+
       </div>
-
     </div>
-
   </div>
   <div *ngIf="addSnack">
     <h1>Add Snack</h1>

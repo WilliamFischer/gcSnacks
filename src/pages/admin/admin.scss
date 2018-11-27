@@ -77,34 +77,138 @@ page-admin {
     width: 100%;
   }
 
+  .noOrders{
+      text-align: center;
+      color: #8e8e8e;
+      width: 100%;
+      margin-top: 30vh;
+
+      font-family: 'Raleway', sans-serif;
+      font-size: 16px;
+  }
+
+  .adminTitleOrder{
+    font-family: 'Raleway', sans-serif;
+    font-size: 21px;
+    width: 190px;
+    text-align: center;
+    padding-top: 40%;
+    letter-spacing: 1px;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    padding-bottom: 5%;
+    color: #8e8e8e;
+    border-bottom: 1px dotted #8e8e8e;
+  }
+
   .shoppingMenu{
     margin-top: 12%;
-    padding-top: 10%;
-    padding-bottom: 0vh;
-    padding-right: 0%;
 
     color: black;
     font-family: 'Nunito Sans', sans-serif;
     font-size: 14px;
 
+    .orderID{
+      font-family: 'Raleway', sans-serif;
+      font-weight: 400;
+      font-size: 18px;
+      width: 80%;
+      margin-top: 20%;
+      letter-spacing: 1px;
+      margin-left: 12%;
+      color: #8e8e8e;
+      padding-bottom: 3%;
+      border-bottom: 1px dotted #e8e8e8;
+    }
+
     ul{
       list-style: none;
+    }
+
+    .optionsMenu{
+      width: 80%;
+      height: auto;
+      margin-top: 10%;
+      display: block;
+      background: lightgreen;
+      margin: 10%;
+      display: flex;
+      flex-wrap: wrap;
+      font-size: 21px;
+
+      .side{
+        width: 50%;
+        background: #ff6b81;
+        height: 100%;
+        text-align: center;
+        padding: 5%;
+        color: #fff;
+      }
+      .right{
+        background: #2ed573;
+      }
+    }
+
+    .finishOrderMenu{
+      padding: 10%;
+      text-align: center;
+      margin: 10%;
+      margin-bottom: 0%;
+      background: #9AECDB;
+      border-radius: 3px;
+      color: #58B19F;
+
+      font-weight: 800;
+      font-family: 'Nunito Sans', sans-serif;
+    }
+
+    .completeOptions{
+      display:flex;
+      flex-wrap: wrap;
+      width: 80%;
+      margin-left: 10%;
+      padding: 0;
+      margin-top: 3%;
+      margin-bottom: 10%;
+
+      li{
+        border-radius: 3px;
+        margin-top: 7%;
+        width: auto;
+        padding: 5%;
+        text-align: center;
+        color: #fff;
+        display: block;
+
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+
+        font-weight: 800;
+        font-family: 'Nunito Sans', sans-serif;
+        text-transform: uppercase;
+      }
     }
 
     .menuItem{
       width: 100%;
       background: #fff;
       height: auto;
-      display: inline-flex;
-      margin-top: 5%;
+      display: flex;
+      flex-wrap: wrap;
+
       overflow: hidden;
-      padding-left: 20%;
-      padding-right: 0%;
+      padding: 10%;
+      margin-top: -10%;
 
       .cartImg{
         width: 50%;
         object-fit: cover;
         height: 100%;
+        display: block;
       }
 
       .rightSideContent{

@@ -20,6 +20,7 @@ export class CartPage {
   cartLoading:boolean  = true;
   userAddress: string;
   userName: string;
+  userUID: string;
   deliverLocation: any;
 
 
@@ -57,6 +58,7 @@ export class CartPage {
 
     this.userAddress = localStorage.getItem('address');
     this.userName = localStorage.getItem('userName');
+    this.userUID = localStorage.getItem('userID');
 
     console.log(this.userName + " @ " + this.userAddress);
 
@@ -117,6 +119,8 @@ export class CartPage {
       time: finalTime,
       address: this.userAddress,
       username: this.userName,
+      uid: this.userUID,
+      alive: true
     })
 
     var cartSource = this.fireStore.collection<any>('users/' + this.afAuth.auth.currentUser.uid + '/cart').valueChanges().subscribe(

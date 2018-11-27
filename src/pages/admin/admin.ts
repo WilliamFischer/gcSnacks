@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular';
 
 import { AngularFirestore } from 'angularfire2/firestore';
 
@@ -32,26 +32,68 @@ export class AdminPage {
   orders: any;
   orderValues: any;
   loader: boolean = true;
+  noOrders: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public fireStore: AngularFirestore) {
-
-  }
-
-
-
-
+  constructor(public navCtrl: NavController, public navParams: NavParams, public fireStore: AngularFirestore,private alertCtrl: AlertController) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AdminPage');
 
+    this.checkOrders();
+  }
 
+  deleteOrder(order){
+    var orderSource = this.fireStore.doc<any>('deliveries/' + order.time);
+    orderSource.update({alive:false});
+
+    this.checkOrders();
+  }
+
+  approveOrder(order){
+    var orderSource = this.fireStore.doc<any>('deliveries/' + order.time);
+    orderSource.update({approved:true});
+
+    this.checkOrders();
+  }
+
+  cancelOrder(order){
+    var orderSource = this.fireStore.doc<any>('deliveries/' + order.time);
+    orderSource.update({approved:false});
+
+    console.log('Order Cancelled')
+
+    this.checkOrders();
+  }
+
+  goHome(){
+    this.navCtrl.push(HomePage);
+  }
+
+  snackAdd(){
+    this.addSnack = true;
+  }
+
+  noSnackAdd(){
+    this.addSnack = false;
+  }
+
+  checkOrders(){
     var delArray = [];
     var delArray2 = [];
+    var deadCount = 0;
+    this.loader = true;
+    this.noOrders = false;
 
     this.fireStore.collection('deliveries').valueChanges().subscribe(values =>{
       this.orderValues = values;
 
       values.forEach(eachObj => {
+        console.log(eachObj);
+
+        if(eachObj['alive'] == false){
+          deadCount++
+        }
+
         this.fireStore.collection<any>('deliveries/' + eachObj['time'] + '/cart').valueChanges().subscribe(values =>{
           delArray.push(values)
         });
@@ -61,33 +103,52 @@ export class AdminPage {
         var orderInterval = setInterval(() => {
           if(delArray.length != 0){
             delArray.forEach(delivery => {
-              delivery.forEach(delivery2 => {
-                if(delivery2.cart){
-                  delArray2.push(delivery2.cart)
-                }
-              })
+                delivery.forEach(delivery2 => {
+                  if(delivery2.cart){
+                    delArray2.push(delivery2.cart)
+                  }
+                })
             });
             clearInterval(orderInterval);
           }
         }, 1000);
       }else{
-        console.log('No Ordervalues')
+        console.log('ORDER ARRAY EMPTY')
+
+        console.log('No New Orders')
+        this.loader = false;
+        this.noOrders = true;
       }
 
     });
 
     var deliveryInterval = setInterval(() => {
       if(delArray2.length != 0){
-        this.loader = false;
-        this.deliveries = delArray2;
-        this.orders = this.orderValues;
-        console.log(this.deliveries)
+        console.log(deadCount + " DEADCOUNT VS FINALARRAY " + delArray.length);
+
+        if(deadCount == delArray.length){
+          console.log('No New Orders')
+          this.loader = false;
+          this.noOrders = true;
+        }else{
+          this.loader = false;
+          this.deliveries = delArray2;
+
+          this.orders = this.orderValues;
+
+          console.log('Orders Discovered: ')
+          console.log(this.orders);
+        }
 
         clearInterval(deliveryInterval);
+
       }
     }, 1000);
-
   }
+
+
+
+
 
   addItem(){
     this.specificSnack = this.fireStore.doc<any>('snacks/' + this.item.name);
@@ -103,14 +164,4 @@ export class AdminPage {
     alert('item added')
   }
 
-  goHome(){
-    this.navCtrl.push(HomePage);
-  }
-
-  snackAdd(){
-    this.addSnack = true;
-  }
-  noSnackAdd(){
-    this.addSnack = false;
-  }
 }
