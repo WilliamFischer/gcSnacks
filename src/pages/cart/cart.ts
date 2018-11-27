@@ -19,6 +19,7 @@ export class CartPage {
   itemQuantity: any;
   cartLoading:boolean  = true;
   userAddress: string;
+  userName: string;
   deliverLocation: any;
 
 
@@ -55,7 +56,10 @@ export class CartPage {
 
 
     this.userAddress = localStorage.getItem('address');
-    console.log(this.userAddress);
+    this.userName = localStorage.getItem('userName');
+
+    console.log(this.userName + " @ " + this.userAddress);
+
   }
 
   closeCart(){
@@ -110,7 +114,9 @@ export class CartPage {
     this.deliverLocation.set({
       totalCost: this.totalPrice + +5 + '.00',
       approved: false,
-      time: finalTime
+      time: finalTime,
+      address: this.userAddress,
+      username: this.userName,
     })
 
     var cartSource = this.fireStore.collection<any>('users/' + this.afAuth.auth.currentUser.uid + '/cart').valueChanges().subscribe(
@@ -122,7 +128,8 @@ export class CartPage {
           cart: {
             item: eachObj.item,
             price: eachObj.price,
-            imgurl: eachObj.img
+            imgurl: eachObj.img,
+            time: finalTime
           }
         })
 

@@ -78,7 +78,11 @@ export class HomePage {
       });
     }else{
       console.log("User Access Details:")
-      console.log(this.afAuth.auth.currentUser)
+
+      var userDetails = this.afAuth.auth.currentUser.displayName;
+      localStorage.setItem('userName', userDetails);
+
+      console.log(userDetails);
 
 
       this.fireStore.collection('snacks').valueChanges().subscribe(

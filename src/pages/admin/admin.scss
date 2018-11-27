@@ -79,17 +79,27 @@ page-admin {
 
   .shoppingMenu{
     margin-top: 12%;
-    padding: 25%;
-    padding-bottom: 20vh;
+    padding-top: 10%;
+    padding-bottom: 0vh;
     padding-right: 0%;
+
+    color: black;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 14px;
+
+    ul{
+      list-style: none;
+    }
 
     .menuItem{
       width: 100%;
       background: #fff;
-      height: 120px;
+      height: auto;
       display: inline-flex;
       margin-top: 5%;
       overflow: hidden;
+      padding-left: 20%;
+      padding-right: 0%;
 
       .cartImg{
         width: 50%;
@@ -107,10 +117,6 @@ page-admin {
           font-size: 18px;
           color: #C9ADA7;
           font-weight: 300;
-          white-space: nowrap;
-          width: 100%;
-          overflow: hidden;
-          text-overflow: ellipsis;
 
           font-family: 'Nunito Sans', sans-serif;
         }
