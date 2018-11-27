@@ -1,11 +1,12 @@
 
 <ion-content padding>
-<h1>Delivering to {{userAddress}}</h1>
+  <h1>Delivering to {{userAddress}}</h1>
 
-<h2 *ngIf="!requestAccepted">Estimated arrival time: {{arrivalTime}}, awaiting approval from driver</h2>
-<h2 *ngIf="requestAccepted">Arrival time: {{arrivalTime}}, driver is on the way</h2>
+  <h2 *ngIf="!approved">Estimated arrival time: {{arrivalTime}}, awaiting approval from driver</h2>
+  <h2 *ngIf="approved" style="color: #2ed573;">Your driver has accepted your order and will arrive at {{arrivalTime}} <br /><br /> 🍩 🍩 🍩</h2>
 
-<img src="assets/cake.gif" />
+  <img src="assets/cake.gif" />
 
-<h3>Support <a>+0421 959 142</a></h3>
+  <h4 *ngIf="approved"><a>Call Driver</a></h4>
+  <h3>Support <a>+0421 959 142</a></h3>
 </ion-content>

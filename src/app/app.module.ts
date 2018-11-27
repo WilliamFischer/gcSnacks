@@ -7,6 +7,9 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { NativeGeocoder } from '@ionic-native/native-geocoder';
 import { PayPal } from '@ionic-native/paypal';
 
+// EXTERNAL MODULES
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+
 import { MyApp } from './app.component';
 
 import { LoginPage } from '../pages/login/login';
@@ -36,6 +39,7 @@ import { Facebook } from '@ionic-native/facebook';
     LoginPage,
     HomePage,
     AdminPage,
+    OrderPage,
     MorePopoverPage
   ],
   imports: [
@@ -43,7 +47,8 @@ import { Facebook } from '@ionic-native/facebook';
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    Ng2SearchPipeModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -51,6 +56,7 @@ import { Facebook } from '@ionic-native/facebook';
     LoginPage,
     HomePage,
     AdminPage,
+    OrderPage,
     MorePopoverPage
   ],
   providers: [

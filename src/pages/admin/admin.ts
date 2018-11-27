@@ -69,6 +69,15 @@ export class AdminPage {
     this.navCtrl.push(HomePage);
   }
 
+  completeOrder(order){
+    var orderSource = this.fireStore.doc<any>('deliveries/' + order.time);
+    orderSource.update({alive:false});
+
+    console.log('Order Completed')
+
+    this.checkOrders();
+  }
+
   snackAdd(){
     this.addSnack = true;
   }

@@ -123,6 +123,8 @@ export class CartPage {
       alive: true
     })
 
+    localStorage.setItem('currentCart', finalTime);
+
     var cartSource = this.fireStore.collection<any>('users/' + this.afAuth.auth.currentUser.uid + '/cart').valueChanges().subscribe(
     values =>{
       values.forEach(eachObj => {

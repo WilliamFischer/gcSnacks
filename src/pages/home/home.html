@@ -4,12 +4,12 @@
   <i class="leftIcon topIcon backIcoHome icon-back" (click)="goToHomeMenu()" *ngIf="itemShowing"></i>
   <i class="leftIcon topIcon moreIconShuffle icon-more" (click)="morePopover($event)" *ngIf="!itemShowing"></i>
   <i class="leftIcon topIcon icon-cart" *ngIf="!itemShowing" (click)="viewCart()"></i>
-  <i class="rightIcon topIcon icon-search" (click)="searchToggle()" *ngIf="!showSearch"></i>
+  <i class="rightIcon topIcon icon-search" (click)="searchToggle()" *ngIf="!showSearch && !itemShowing"></i>
   <i class="rightIcon topIcon topCloseIcon icon-close" (click)="searchToggle()" *ngIf="showSearch"></i>
   <h1 class="homeLogo" *ngIf="!itemShowing">Munch</h1>
   <h1 *ngIf="itemShowing">Detail</h1>
 
-  <input placeholder="Search snacks..." class="coreSearch"  *ngIf="showSearch"/>
+  <input placeholder="Search snacks..." class="coreSearch"  *ngIf="showSearch" [(ngModel)]="searchItems"/>
 
   <ul *ngIf="!showSearch">
     <!-- <li (click)="selectCat(0)" [ngClass]="{ 'active': this.selectedCat == 0}">Recommended</li> -->
@@ -54,15 +54,26 @@
 
     <ion-spinner class="ionSpinner" *ngIf="!loading" name="bubbles"></ion-spinner>
 
-    <div class="cardGrid" *ngIf="loading" id="snackCard" >
-      <div class="card" *ngFor="let card of cards"  (click)="showItemDetails(card)" [hidden]="card.category != selectedCat">
-          <img class="snackImg" [src]="card.imgurl" />
-          <div class="bottomInfo">
-            <h2 class="snackName">{{card.name}}</h2>
-            <h2 class="snackPrice">${{card.price}} &bull; {{card.weight}}<label *ngIf="card.category != 'drinks'">g</label><label *ngIf="card.category == 'drinks'">ml</label></h2>
-          </div>
+    <div class="cardGrid" *ngIf="showSearch && loading" id="snackCard">
+      <div class="card" *ngFor="let card of cards | filter:searchItems"  (click)="showItemDetails(card)">
+        <img class="snackImg" [src]="card.imgurl" />
+        <div class="bottomInfo">
+          <h2 class="snackName">{{card.name}}</h2>
+          <h2 class="snackPrice">${{card.price}} &bull; {{card.weight}}<label *ngIf="card.category != 'drinks'">g</label><label *ngIf="card.category == 'drinks'">ml</label></h2>
+        </div>
       </div>
     </div>
+
+    <div class="cardGrid" *ngIf="!showSearch && loading" id="snackCard">
+      <div class="card" *ngFor="let card of cards"  (click)="showItemDetails(card)" [hidden]="card.category != selectedCat" >
+        <img class="snackImg" [src]="card.imgurl" />
+        <div class="bottomInfo">
+          <h2 class="snackName">{{card.name}}</h2>
+          <h2 class="snackPrice">${{card.price}} &bull; {{card.weight}}<label *ngIf="card.category != 'drinks'">g</label><label *ngIf="card.category == 'drinks'">ml</label></h2>
+        </div>
+      </div>
+    </div>
+
   </div>
 
 </ion-content>

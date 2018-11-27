@@ -110,11 +110,14 @@ page-home {
       width: 90%;
       padding: 3%;
       margin-left: 5%;
-      margin-top: 5%;
+      margin-top: 3%;
       border-radius: 5px;
-      border: 1px solid #C9ADA7;
+      //border: 1px solid #C9ADA7;
+      border: none;
+      box-shadow: 0px 0px 10px #e8e8e8;
 
       font-family: 'Nunito Sans', sans-serif;
+      color: #9A8C98;
     }
 
     .coreSearch::placeholder{

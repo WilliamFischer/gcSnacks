@@ -33,14 +33,13 @@
             </div>
         </div>
 
-        <div class="finishOrderMenu" *ngIf="order.approved">
+        <div class="finishOrderMenu" *ngIf="order.approved" (click)="completeOrder(order)">
             COMPLETE DELIVERY
         </div>
 
         <ul class="completeOptions" *ngIf="order.approved">
           <li style="background: #182C61;">Call Driver</li>
           <li style="background: #FEA47F" (click)="cancelOrder(order)">Cancel Order</li>
-          <li style="background: #FD7272;">Delete Order</li>
         </ul>
 
         <div class="menuItem">
