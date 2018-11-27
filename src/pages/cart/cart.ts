@@ -5,6 +5,8 @@ import { AngularFirestore,AngularFirestoreCollection } from 'angularfire2/firest
 
 import { AngularFireAuth } from '@angular/fire/auth';
 
+import { OrderPage } from '../order/order';
+
 @IonicPage()
 @Component({
   selector: 'page-cart',
@@ -142,8 +144,10 @@ export class CartPage {
       });
     })
 
-    var modalPage = this.modalCtrl.create('OrderPage');
-    modalPage.present();
+    this.navCtrl.push(OrderPage);
+
+    // var modalPage = this.modalCtrl.create('OrderPage');
+    // modalPage.present();
 
   //   if(this.totalPrice != 0){
   //     this.cartLoading  = false;

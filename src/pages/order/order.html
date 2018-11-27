@@ -9,4 +9,5 @@
 
   <h4 *ngIf="approved"><a>Call Driver</a></h4>
   <h3>Support <a>+0421 959 142</a></h3>
+  <div *ngIf="!approved" class="cancelBtn" (click)="cancelOrder()">CANCEL ORDER</div>
 </ion-content>

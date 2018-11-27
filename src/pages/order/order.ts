@@ -99,4 +99,28 @@ export class OrderPage {
 
   }
 
+  cancelOrder(){
+
+    let alert = this.alertCtrl.create({
+      subTitle: 'Are you sure you want to cancel your order?',
+      buttons: [{
+        text: 'Dismiss',
+        role: 'cancel',
+      }, {
+        text: 'CANCEL',
+        handler: () => {
+          console.log('ORDER DELETED!!')
+
+          var cartSource = this.fireStore.doc<any>('deliveries/' + this.userTime);
+          cartSource.delete();
+
+          localStorage.setItem('currentCart', null);
+          this.navCtrl.push(HomePage)
+        }
+      }
+    ]
+    });
+    alert.present();
+  }
+
 }
