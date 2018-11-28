@@ -32,6 +32,7 @@
     "@types/jquery": "^3.3.22",
     "angularfire2": "^5.1.0",
     "com.paypal.cordova.mobilesdk": "^3.5.0",
+    "cordova-android": "7.1.4",
     "cordova-ios": "4.5.5",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-facebook4": "^3.1.0",
@@ -84,7 +85,8 @@
       "com.paypal.cordova.mobilesdk": {}
     },
     "platforms": [
-      "ios"
+      "ios",
+      "android"
     ]
   }
 }

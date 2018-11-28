@@ -10,7 +10,7 @@
   <h1 *ngIf="itemShowing">Detail</h1>
 
   <form action=".">
-  <input placeholder="Search snacks..." class="coreSearch"  *ngIf="showSearch" [(ngModel)]="searchItems" type="search"/>
+  <input placeholder="Search snacks..." class="coreSearch"  *ngIf="showSearch" [(ngModel)]="searchItems" [ngModelOptions]="{standalone:true}" type="search"/>
   </form>
 
   <ul *ngIf="!showSearch">
