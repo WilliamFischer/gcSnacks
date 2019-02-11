@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController,ModalController,PopoverController,AlertController  } from 'ionic-angular';
+import { NavController,ModalController,PopoverController,AlertController,LoadingController  } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder';
 
@@ -23,7 +23,8 @@ export class HomePage {
   cards: any;
   userSaveLocation: any;
   userCart: any;
-  itemShowing: boolean = false;
+  itemShowing: boolean = false
+
   quantityTrigger: boolean;
   snackTime: boolean;
   cardName: string;
@@ -33,17 +34,32 @@ export class HomePage {
   cardWeight: number;
   cardAmount: number;
   cardCat: string;
+  cartCount: number = 0;
+  CartCountObj: number = 0;
   itemQuantity: number = 1;
   adjustedPrice: any;
   selectedCat: string;
+  badgePulse: boolean;
+  recommendedMode: boolean = true;
 
-  constructor(public navCtrl: NavController,public modalCtrl: ModalController,public popoverCtrl: PopoverController,private fireStore: AngularFirestore, public afAuth: AngularFireAuth,private alertCtrl: AlertController,private geolocation: Geolocation,private nativeGeocoder: NativeGeocoder) {
+  constructor(
+    public navCtrl: NavController,
+    public modalCtrl: ModalController,
+    public popoverCtrl: PopoverController,
+    private fireStore: AngularFirestore,
+    public afAuth: AngularFireAuth,
+    private alertCtrl: AlertController,
+    public loadingCtrl: LoadingController,
+    private geolocation: Geolocation,
+    private nativeGeocoder: NativeGeocoder) {
 
       this.geolocation.getCurrentPosition().then((resp) => {
 
+        console.log(resp);
+
         let lat = resp.coords.longitude;
         let lng = resp.coords.latitude;
-        this.getAddress(lng, lat)
+        this.getAddress(lng, lat);
 
         let date = new Date(this.today);
         let hours = date.getHours();
@@ -84,6 +100,8 @@ export class HomePage {
       localStorage.setItem('userName', userDetailsName);
       localStorage.setItem('userID', userDetailsID);
 
+
+
       this.fireStore.collection('snacks').valueChanges().subscribe(
         values =>{
           this.cards = values
@@ -91,7 +109,7 @@ export class HomePage {
           console.log('Database Loaded')
         });
 
-        this.selectedCat = 'chocolate';
+        this.selectedCat = '0';
 
         this.fireStore.doc('users/' + this.afAuth.auth.currentUser.uid).valueChanges().subscribe(
         values =>{
@@ -101,6 +119,19 @@ export class HomePage {
           }else{
             this.createUserDB();
           }
+        });
+
+        this.fireStore.collection('users/' + this.afAuth.auth.currentUser.uid + '/cart').valueChanges().subscribe(values =>{
+          var countZero;
+          var quanitityTotal = 0;
+
+          values.forEach(eachObj => {
+            quanitityTotal = quanitityTotal + eachObj['quanitity'];
+          });
+
+          this.cartCount = quanitityTotal;
+          //console.log("Final Count is " + quanitityTotal);
+
         });
     }
   }
@@ -119,30 +150,34 @@ export class HomePage {
 
     this.nativeGeocoder.reverseGeocode(lng, lat, geoOptions)
       .then((result: NativeGeocoderReverseResult[]) => {
-        if(result[0].subLocality == 'Gold Coast'){
+
+        if(result[0].subLocality == 'Gold Coast' || result[0].subLocality == 'Broadbeach-Mermaid Beach'|| result[0].subLocality == 'Broadbeach-Mermaid Waters'){
           console.log("YOUR ON THE GOLD COAST");
           var userAddress = result[0].subThoroughfare + " " + result[0].thoroughfare + ", " + result[0].locality + " (" + result[0].postalCode + ")";
           localStorage.setItem('address', userAddress);
         }else{
           console.log('NOT ON THE COAST')
           let alert = this.alertCtrl.create({
-            title: 'Logging off..',
-            message: 'Sorry :(, Munch is only available for user\'s on the Gold Coast.,',
+            title: 'Restricted Location',
+            message: 'Munch is only available for user\'s on the Gold Coast, you will not be able to place an order unless you change your location.',
+            enableBackdropDismiss: false,
             buttons: [{
-                text: 'Okay',
+                text: 'Dismiss',
                 handler: () => {
-                  this.afAuth.auth.signOut().then(() => {
-                     this.navCtrl.push(LoginPage)
-                  });
+                  // this.afAuth.auth.signOut().then(() => {
+                  //    this.navCtrl.push(LoginPage)
+                  // });
                 }
               }]
           });
           alert.present();
         }
+
+        console.log(result[0])
       })
       .catch((error: any) => {
         console.log(error)
-        localStorage.setItem('address', '1 Stratie Drive Robina');
+        localStorage.setItem('address', '');
       });
   }
 
@@ -192,6 +227,7 @@ export class HomePage {
   }
 
   addItemtoCart() {
+    this.badgePulse = true;
     var userUID = this.afAuth.auth.currentUser.uid;
 
     this.userCart = this.fireStore.doc<any>('users/' + userUID + '/cart/' + this.cardName);
@@ -216,6 +252,11 @@ export class HomePage {
 
     this.itemQuantity = 1;
     this.quantityTrigger = true;
+
+    setTimeout(a=>{
+      this.badgePulse = false;
+    },5000,[]);
+
   }
 
   viewCart(){
@@ -249,43 +290,69 @@ export class HomePage {
     console.log("User not in database... adding user")
     var userUID = this.afAuth.auth.currentUser.uid;
 
-    let alert = this.alertCtrl.create({
+    let loadingSaveUser = this.loadingCtrl.create({
+      content: 'Your account is being created'
+    });
+
+    let phNumAlert = this.alertCtrl.create({
       title: 'Welcome!',
-      subTitle: 'To continue please enter your phone number',
+      subTitle: 'To continue please enter your phone number, so the driver can contact you if you want to make an order.',
+      enableBackdropDismiss: false,
       inputs: [
         {
           name: 'number',
-          placeholder: 'number',
-          type: 'number'
+          placeholder: 'Ph. Number',
+          type: 'tel'
         }
       ],
       buttons: [
         {
           text: 'Confirm',
           handler: data => {
-            this.userSaveLocation = this.fireStore.doc<any>('users/' + userUID);
-            this.userSaveLocation.set({
-              uid: userUID,
-              name: this.afAuth.auth.currentUser.displayName,
-              phone: data.number,
-              email: this.afAuth.auth.currentUser.email
-            })
+            if(data.number.length == 9 || data.number.length == 10 ){
 
-            console.log("User Successfully added");
-            window.location.reload();
+              loadingSaveUser.present();
+
+              this.userSaveLocation = this.fireStore.doc<any>('users/' + userUID);
+              this.userSaveLocation.set({
+                uid: userUID,
+                name: this.afAuth.auth.currentUser.displayName,
+                phone: data.number,
+                email: this.afAuth.auth.currentUser.email
+              })
+
+              setTimeout(a=>{
+                loadingSaveUser.dismiss();
+                console.log("User Successfully added");
+                window.location.reload();
+              },3000,[]);
+            }else{
+              alert('Sorry, this number is invalid, it seems to be less than 9 numbers long.');
+              return false;
+            }
           }
         }
       ]
     });
-    alert.present();
+
+    phNumAlert.present();
 
 
   }
 
   selectCat(cat){
+
+
     this.selectedCat = cat;
+
+    if(cat == '0'){
+      this.recommendedMode = true;
+    }else{
+      this.recommendedMode = false;
+    }
 
     this.itemShowing = null;
     this.itemQuantity = 1;
   }
+
 }

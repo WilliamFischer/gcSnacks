@@ -1,0 +1,27 @@
+
+<div class="topContent animated slideInDown">
+    <h1 class="cartTitleFrnt">Your Orders</h1>
+    <i class="rightIcon topCloseIcon topIcon cartCloseIcon icon-close" (click)="closeOrder()"></i>
+</div>
+
+<ion-content padding class="coreWrapper">
+  <div class="orderCardWrapper">
+    <div class="orderCard animated slideInLeft" *ngFor="let item of myOrdersArray" >
+      <ul>
+        <li><b>Order Time:</b> {{item.time}}</li>
+        <li><b>Order Address:</b>
+          <label *ngIf="item.address">{{item.address}}</label>
+          <label *ngIf="!item.address"><br />Order address unknown</label>
+        </li>
+        <li><b>Order Status:</b>
+          <label *ngIf="item.approved == false && item.alive == true" style="color: #ff7f50">Awaiting Approval</label>
+          <label *ngIf="item.approved == true && item.alive == true" style="color: #ff7f50">Awaiting Delivery</label>
+          <label *ngIf="item.approved == false && item.alive == false" style="color: #ff6b81">Order Cancelled</label>
+          <label *ngIf="item.approved == true && item.alive == false" style="color: #7bed9f">Order Complete</label>
+        </li>
+        <li><b>Total Cost:</b> {{item.totalCost}}</li>
+      </ul>
+
+    </div>
+  </div>
+</ion-content>

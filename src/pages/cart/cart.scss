@@ -1,6 +1,7 @@
 page-cart {
   .coreWrapper{
     background: #F8F8F9;
+    display: block;
   }
 
   .emptyLabel{
@@ -12,6 +13,7 @@ page-cart {
     font-weight: 200;
     color: #E5989B;
   }
+
 
   .topContent{
     background: white;
@@ -28,6 +30,18 @@ page-cart {
       font-weight: 500;
       font-family: 'Raleway', sans-serif;
       margin-top: 10%;
+      animation: fadein 0.5s;
+
+    }
+
+    .leftClearBtn{
+      position: absolute;
+      margin-left: 7%;
+      color: #C9ADA7;
+      font-weight: 500;
+      font-size: 14px;
+      font-family: 'Raleway', sans-serif;
+      margin-top: 11%;
       animation: fadein 0.5s;
     }
 
@@ -136,27 +150,80 @@ page-cart {
     }
   }
 
+  .cartSpinner{
+    text-align: center;
+    margin-top: 40vh;
+    width: 100%;
+    position: absolute;
+  }
+
+  .promoBannerLg{
+    display: block;
+    width: 100%;
+    padding: 3%;
+    padding-left: 10%;
+    margin-top: -10%;
+    position: absolute;
+    background: #2ed573;
+    text-align: center;
+    color: #fff;
+    z-index: 900;
+    font-size: 12px;
+    border-top: 1px solid #e8e8e8;
+
+    font-weight: 300;
+    font-family: 'Nunito Sans', sans-serif;
+  }
+
   .subFooter{
     display: block;
     width: 100%;
     padding: 6%;
+    padding-left: 10%;
     margin-top: 75.5vh;
     position: sticky;
     background: #fff;
-    text-align: center;
+    text-align: left;
     color: black;
-    z-index: 9000;
+    z-index: 900;
     border-top: 1px solid #e8e8e8;
 
     font-weight: 400;
     font-family: 'Nunito Sans', sans-serif;
     letter-spacing: 2px;
 
-    transition: all 4s ease-in-out;
+    transition: all 1s ease-in-out;
 
     span{
       font-weight: 600;
     }
+
+    .leftPromoText{
+        margin-top: 0.5%;
+        margin-left: 25%;
+        font-size: 12px;
+        position: absolute;
+        color: #457B9D;
+        letter-spacing: 0px;
+    }
+
+    .discountText{
+      font-size: 10px;
+      letter-spacing: 0px;
+      color: #8e8e8e;
+      margin-top: 0.8%;
+      margin-left: 1%;
+      position: absolute;
+    }
+  }
+
+  .centerFooter{
+    text-align: center;
+    padding-left: 6%;
+  }
+
+  .promoSubFooter{
+    border-top: none;
   }
 
   .subFooter2{
@@ -168,7 +235,7 @@ page-cart {
     background: #fff;
     text-align: center;
     color: #8e8e8e;
-    z-index: 9000;
+    z-index: 900;
     border-top: 1px solid #e8e8e8;
 
     font-weight: 300;
@@ -180,18 +247,6 @@ page-cart {
       font-weight: 600;
     }
   }
-
-  .cartSpinner{
-    text-align: center;
-    margin-top: 40vh;
-    width: 100%;
-    position: absolute;
-  }
-
-
-
-
-
 
   .addItemFooter{
     .toolbar{
@@ -212,5 +267,28 @@ page-cart {
       font-size: 28px;
     }
   }
+
+  .coreLock{
+
+  }
+
+  // IPHONE X
+  @media only screen
+    and (device-width : 375px)
+    and (device-height : 812px)
+    and (-webkit-device-pixel-ratio : 3) {
+      .topContent{
+        padding-top: 7%;
+        height: 110px;
+      }
+
+      .shoppingMenu{
+        margin-top: 25%;
+      }
+
+      .subFooter{
+        margin-top: 80vh;
+      }
+    }
 
 }

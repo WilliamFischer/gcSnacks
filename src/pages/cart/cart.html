@@ -1,14 +1,14 @@
-
-<div class="topContent">
-    <h1>Shopping Cart</h1>
-    <i class="rightIcon topCloseIcon topIcon icon-close" (click)="closeCart()"></i>
+<div class="topContent animated slideInDown">
+    <h3 class="leftClearBtn" *ngIf="!emptyCart" (click)="clearCart()">Clear</h3>
+    <h1 class="cartTitleFrnt">Shopping Cart</h1>
+    <i class="rightIcon topCloseIcon topIcon cartCloseIcon icon-close" (click)="closeCart()"></i>
 </div>
 
 <ion-content class="coreWrapper">
   <ion-spinner name="bubbles" *ngIf="cartLoading" class="cartSpinner"></ion-spinner>
   <div class="emptyLabel" *ngIf="emptyCart">Your cart is empty</div>
 
-  <div class="shoppingMenu" >
+  <div class="shoppingMenu animated slideInLeft" >
     <div class="menuItem" *ngFor="let cartItem of cartItems" >
       <img [src]="cartItem.img" class="cartImg"/>
       <div class="rightSideContent">
@@ -27,16 +27,29 @@
 
 </ion-content>
 
+<div class="autoCompleteSpace" *ngIf="addressTriggered">
+  <ng4geo-autocomplete [userSettings]="userSettings" (componentCallback)="autoCompleteCallback($event)"></ng4geo-autocomplete>
 
-<div class="subFooter" *ngIf="totalPrice > 0">
-  Total ({{cartCount}}) : <span>${{totalPrice}}</span>
+  <div class="confirmBtn" (click)="confirmAddress()">Confirm Address</div>
+  <div class="cancelBtn" (click)="goBackAddress()">Cancel</div>
 </div>
 
-<div class="subFooter2" *ngIf="totalPrice > 0">
-  Delivering to <span>{{userAddress}}</span>
+
+<div  *ngIf="totalPrice > 0" >
+  <div class="promoBannerLg animated slideInLeft" *ngIf="promoBanner">
+    {{discountAmount}}% discount added
+  </div>
+  <div class="subFooter" [ngClass]="{'centerFooter' : discountAmount, 'promoSubFooter': promoBanner}">
+    Total ({{cartCount}}) : <span>${{totalPrice}}</span> <span class="discountText" *ngIf="discountAmount"> / {{discountAmount}}% off</span>
+    <span *ngIf="!discountAmount" class="leftPromoText" (click)="enterPromoCode()">Promo Code</span>
+  </div>
+
+  <div class="subFooter2" (click)="changeAddress()">
+    Delivering to <span *ngIf="userAddress">{{userAddress}}</span><span *ngIf="!userAddress">Address not found</span>
+  </div>
 </div>
 
-<ion-footer class="addItemFooter" (click)="placeOrder()" *ngIf="!emptyCart">
+<ion-footer class="addItemFooter animated fadeIn" (click)="placeOrder()" [hidden]="emptyCart">
   <ion-toolbar>
     <ion-title><i class="iconFooter icon-tick"></i></ion-title>
   </ion-toolbar>

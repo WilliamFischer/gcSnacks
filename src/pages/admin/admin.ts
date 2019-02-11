@@ -27,12 +27,16 @@ export class AdminPage {
     desc: '',
     imgurl: ''
   };
+  timeLeft: number = 180;
+  timerTime: string = '00:03:00';
   addSnack: boolean;
   deliveries: any;
   orders: any;
   orderValues: any;
   loader: boolean = true;
   noOrders: boolean = false;
+  timeInterval: any;
+  timerPaused: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public fireStore: AngularFirestore,private alertCtrl: AlertController) {}
 
@@ -46,6 +50,8 @@ export class AdminPage {
     this.fireStore.collection('deliveries').valueChanges().subscribe(values =>{
       this.checkOrders();
     });
+
+
   }
 
   deleteOrder(order){
@@ -69,6 +75,41 @@ export class AdminPage {
     this.navCtrl.push(HomePage);
   }
 
+  setTimer(order){
+      var orderSource = this.fireStore.doc<any>('deliveries/' + order.time);
+      orderSource.update({timer:true});
+
+      console.log('Order Timer Set')
+
+      this.timeInterval = setInterval(() => {
+
+        this.timeLeft--
+        var time = this.toTimeString(this.timeLeft);
+        this.timerTime = time;
+
+      },1000)
+
+  }
+
+  pauseTimer(time){
+    console.log('order timer paused at ' + time)
+
+    if(this.timeInterval){
+      clearInterval(this.timeInterval);
+      this.timeInterval = null;
+      this.timerTime = time;
+    }else{
+      console.log('No timer found')
+    }
+
+    this.timerPaused = true;
+  }
+
+  resumeTimer(order){
+    this.timerPaused = false;
+    this.setTimer(order)
+  }
+
   completeOrder(order){
     var orderSource = this.fireStore.doc<any>('deliveries/' + order.time);
     orderSource.update({alive:false});
@@ -76,6 +117,7 @@ export class AdminPage {
     console.log('Order Completed')
 
     this.checkOrders();
+    this.timeLeft = 180;
   }
 
   snackAdd(){
@@ -94,9 +136,16 @@ export class AdminPage {
     this.fireStore.collection('deliveries').valueChanges().subscribe(values =>{
       this.orderValues = values;
 
+      let runagain = true;
+
       values.forEach(eachObj => {
         if(eachObj['alive'] == false){
           deadCount++
+        }
+
+        if(runagain && eachObj['timer']){
+          this.setTimer(eachObj)
+          runagain = false;
         }
 
         this.fireStore.collection<any>('deliveries/' + eachObj['time'] + '/cart').valueChanges().subscribe(values =>{
@@ -165,9 +214,14 @@ export class AdminPage {
       weight: this.item.weight,
       desc: this.item.desc,
       imgurl: this.item.imgurl,
+      recommended: false
     })
 
     alert('item added')
+  }
+
+  toTimeString(seconds) {
+    return (new Date(seconds * 1000)).toUTCString().match(/(\d\d:\d\d:\d\d)/)[0];
   }
 
 }

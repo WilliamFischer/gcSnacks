@@ -28,26 +28,38 @@ export class AuthProvider {
   }
 
   loginWithGoogle(){
-    var provider = new firebase.auth.GoogleAuthProvider();
-    return(
-      this.afAuth.auth.signInWithRedirect(provider).then(function(result) {
-        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-        // var token = result.credential.;
-        // The signed-in user info.
-        var user = result;
-        return user;
-      }).catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // The email of the user's account used.
-        var email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        var credential = error.credential;
 
-        return error;
-      })
-    );
+    var provider = new firebase.auth.GoogleAuthProvider();
+    return this.afAuth.auth.signInWithRedirect(provider);
+
+    // var provider = new firebase.auth.GoogleAuthProvider();
+    // return(
+    //   this.afAuth.auth.signInWithRedirect(provider).then(function(result) {
+    //     // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+    //     // var token = result.credential.;
+    //     // The signed-in user info.
+    //     var user = result;
+    //     return user;
+    //   }).catch(function(error) {
+    //     // Handle Errors here.
+    //     var errorCode = error.code;
+    //     var errorMessage = error.message;
+    //     // The email of the user's account used.
+    //     var email = error.email;
+    //     // The firebase.auth.AuthCredential type that was used.
+    //     var credential = error.credential;
+    //
+    //     return error;
+    //   })
+    // );
+  }
+
+  loginWithEmail(email, password){
+    return firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password)
+  }
+
+  signupWithEmail(email, password){
+    return firebase.auth().createUserAndRetrieveDataWithEmailAndPassword(email, password)
   }
 
 

@@ -2,12 +2,14 @@
 <ion-content padding>
   <h1>Delivering to {{userAddress}}</h1>
 
-  <h2 *ngIf="!approved">Estimated arrival time: {{arrivalTime}}, awaiting approval from driver</h2>
-  <h2 *ngIf="approved" style="color: #2ed573;">Your driver has accepted your order and will arrive at {{arrivalTime}} <br /><br /> 🍩 🍩 🍩</h2>
+  <h2 *ngIf="!approved">Your order will arrive around <b>{{arrivalTime}}</b>, right now we are just awaiting approval from your driver</h2>
+  <h2 *ngIf="approved && !timer" style="color: #2ed573;">Your driver has accepted your order and will arrive around {{arrivalTime}} <br /><br /> 🍩 🍩 🍩</h2>
+  <h2 *ngIf="approved && timer" style="text-align: center;">Your driver has arrived, please pick your order up within three minutes.<br /><br /></h2>
 
-  <img src="assets/cake.gif" />
+  <img *ngIf="!timer" src="assets/cake.gif" />
+  <h1 class="timer" *ngIf="timer">{{timerTime}}</h1>
 
   <h4 *ngIf="approved"><a>Call Driver</a></h4>
-  <h3>Support <a>+0421 959 142</a></h3>
-  <div *ngIf="!approved" class="cancelBtn" (click)="cancelOrder()">CANCEL ORDER</div>
+  <h3><a>Call Support Center</a></h3>
+  <div *ngIf="!approved" class="cancelBtn" (click)="cancelOrder()">CANCEL YOUR ORDER</div>
 </ion-content>

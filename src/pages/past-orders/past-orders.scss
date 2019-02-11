@@ -1,0 +1,78 @@
+page-past-orders {
+
+    .coreWrapper{
+      background: #F8F8F9;
+    }
+
+    .topContent{
+      background: white;
+      display: block;
+      position: absolute;
+      z-index: 9000;
+      height: 70px;
+      width: 100%;
+
+      h1{
+        font-size: 18px;
+        text-align: center;
+        color: #22223B;
+        font-weight: 500;
+        font-family: 'Raleway', sans-serif;
+        margin-top: 10%;
+        animation: fadein 0.5s;
+      }
+
+      .homeLogo{
+        font-family: 'Gloria Hallelujah', cursive;
+        font-weight: bolder;
+        font-size: 21px;
+        width: 100%;
+        color: #4A4E69;
+        margin-top: 5.5%;
+        letter-spacing: 1px;
+      }
+
+      .topIcon{
+        position: absolute;
+        margin: 6%;
+        font-size: 28px;
+        color:#4A4E69;
+        padding-top: 0.5%;
+      }
+
+      .topCloseIcon{
+        font-size: 18px;
+        margin-top: -8%;
+        position: absolute;
+      }
+
+      .rightIcon{
+        margin-left:87%;
+        padding-top: 0%;
+        z-index: 9000;
+      }
+    }
+
+    .orderCardWrapper{
+      margin-top: 80px;
+    }
+
+    .orderCard{
+      background: #fff;
+      width: 100%;
+      padding: 5%;
+      padding-left: 0%;
+      margin-top: 10%;
+      font-size: 16px;
+      color: #C9ADA7;
+
+      ul{
+        list-style: none;
+
+        li{
+          margin-top: 5%;
+        }
+      }
+    }
+
+}

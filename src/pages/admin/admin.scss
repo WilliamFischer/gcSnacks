@@ -23,6 +23,18 @@ page-admin {
     margin-top: 10vh;
   }
 
+  .addSncakTitle{
+      padding-top: 1%;
+      display: block;
+      text-align: left;
+      position: absolute;
+      padding-left: 15%;
+
+      font-family: 'Gloria Hallelujah', cursive;
+      font-size: 18px;
+      color: black;
+  }
+
   .topContent{
     background: white;
     display: block;
@@ -164,6 +176,13 @@ page-admin {
       font-family: 'Nunito Sans', sans-serif;
     }
 
+    .timerText{
+      font-size: 42px;
+      text-align: center;
+      padding: 5%;
+      color: #ff4757;
+    }
+
     .completeOptions{
       display:flex;
       flex-wrap: wrap;
@@ -174,6 +193,7 @@ page-admin {
       margin-bottom: 10%;
 
       li{
+        font-size: 12px;
         border-radius: 3px;
         margin-top: 7%;
         width: auto;
@@ -197,11 +217,10 @@ page-admin {
       width: 100%;
       background: #fff;
       height: auto;
-      display: flex;
-      flex-wrap: wrap;
 
       overflow: hidden;
       padding: 10%;
+      padding-right: 0%;
       margin-top: -10%;
 
       .cartImg{

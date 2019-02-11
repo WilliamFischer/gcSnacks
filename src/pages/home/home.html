@@ -1,29 +1,35 @@
-
-<div class="topContent">
-
+<div class="topContent animated slideInDown">
   <i class="leftIcon topIcon backIcoHome icon-back" (click)="goToHomeMenu()" *ngIf="itemShowing"></i>
   <i class="leftIcon topIcon moreIconShuffle icon-more" (click)="morePopover($event)" *ngIf="!itemShowing"></i>
+
   <i class="leftIcon topIcon icon-cart" *ngIf="!itemShowing" (click)="viewCart()"></i>
+  <span class="animated notficationBadge" *ngIf="cartCount && !itemShowing" [ngClass]="{'bounceIn' : badgePulse}">{{cartCount}}</span>
+
   <i class="rightIcon topIcon icon-search" (click)="searchToggle()" *ngIf="!showSearch && !itemShowing"></i>
   <i class="rightIcon topIcon topCloseIcon icon-close" (click)="searchToggle()" *ngIf="showSearch"></i>
+
   <h1 class="homeLogo" *ngIf="!itemShowing">Munch</h1>
+
+
   <h1 *ngIf="itemShowing">Detail</h1>
 
   <form action=".">
   <input placeholder="Search snacks..." class="coreSearch"  *ngIf="showSearch" [(ngModel)]="searchItems" [ngModelOptions]="{standalone:true}" type="search"/>
   </form>
 
-  <ul *ngIf="!showSearch">
-    <!-- <li (click)="selectCat(0)" [ngClass]="{ 'active': this.selectedCat == 0}">Recommended</li> -->
-    <li (click)="selectCat('chocolate')" [ngClass]="{ 'active': this.selectedCat == 'chocolate'}">Chocolate</li>
-    <li (click)="selectCat('candy')" [ngClass]="{ 'active': this.selectedCat == 'candy'}">Candy</li>
-    <!-- <li (click)="menuNumber(3)" [ngClass]="{ 'active': this.menuValue == 3}">Ice Cream</li> -->
-    <li (click)="selectCat('chips')" [ngClass]="{ 'active': this.selectedCat == 'chips'}">Chips</li>
-    <!-- <li (click)="selectCat(5)" [ngClass]="{ 'active': this.selectedCat == 5}">Jerky n' Nuts</li> -->
-    <li (click)="selectCat('drinks')" [ngClass]="{ 'active': this.selectedCat == 'drinks'}">Drinks</li>
-    <li (click)="selectCat('bundle')" [ngClass]="{ 'active': this.selectedCat == 'bundle'}">Bundles</li>
-    <li class="spaceHere"></li>
-  </ul>
+  <div class="scrollSpace animated slideInRight" *ngIf="!showSearch">
+    <ul>
+      <li (click)="selectCat('0')" [ngClass]="{ 'active': this.selectedCat == '0'}">Recommended</li>
+      <li (click)="selectCat('chocolate')" [ngClass]="{ 'active': this.selectedCat == 'chocolate'}">Chocolate</li>
+      <li (click)="selectCat('candy')" [ngClass]="{ 'active': this.selectedCat == 'candy'}">Candy</li>
+      <!-- <li (click)="menuNumber(3)" [ngClass]="{ 'active': this.menuValue == 3}">Ice Cream</li> -->
+      <li (click)="selectCat('chips')" [ngClass]="{ 'active': this.selectedCat == 'chips'}">Chips</li>
+      <!-- <li (click)="selectCat(5)" [ngClass]="{ 'active': this.selectedCat == 5}">Jerky n' Nuts</li> -->
+      <li (click)="selectCat('drinks')" [ngClass]="{ 'active': this.selectedCat == 'drinks'}">Drinks</li>
+      <li (click)="selectCat('bundle')" [ngClass]="{ 'active': this.selectedCat == 'bundle'}">Bundles</li>
+      <li class="spaceHere"></li>
+    </ul>
+  </div>
 </div>
 
 <div class="snackTimeBanner" *ngIf="snackTime">
@@ -32,8 +38,9 @@
 
 <ion-content class="coreWrapper" [ngClass]="{ 'bannerPush': snackTime }">
   <div class="oneItem" *ngIf="itemShowing">
+
     <div class="itemImageWrapper">
-      <img class="itemImage" [src]="cardImg" />
+      <img class="itemImage" src="{{cardImg}}" [ngClass]="{'lowerHeight': cardCat == 'chocolate'}"/>
     </div>
 
     <div class="itemDetailsWrapper">
@@ -56,7 +63,30 @@
 
     <ion-spinner class="ionSpinner" *ngIf="!loading" name="bubbles"></ion-spinner>
 
-    <div class="cardGrid" *ngIf="showSearch && loading" id="snackCard">
+    <!-- RECOMMENDED GRID -->
+    <div class="cardGrid animated slideInUp" *ngIf="recommendedMode && !showSearch && loading" id="snackCard">
+      <div class="card" *ngFor="let card of cards"  (click)="showItemDetails(card)" [hidden]="card.recommended != true" >
+        <img class="snackImg" [src]="card.imgurl" />
+        <div class="bottomInfo">
+          <h2 class="snackName">{{card.name}}</h2>
+          <h2 class="snackPrice">${{card.price}} &bull; {{card.weight}}<label *ngIf="card.category != 'drinks'">g</label><label *ngIf="card.category == 'drinks'">ml</label></h2>
+        </div>
+      </div>
+    </div>
+
+    <!-- ALL CATEGORIES GRID -->
+    <div class="cardGrid animated slideInUp" *ngIf="!recommendedMode && !showSearch && loading" id="snackCard">
+      <div class="card" *ngFor="let card of cards"  (click)="showItemDetails(card)" [hidden]="card.category != selectedCat" >
+        <img class="snackImg" [src]="card.imgurl" />
+        <div class="bottomInfo">
+          <h2 class="snackName">{{card.name}}</h2>
+          <h2 class="snackPrice">${{card.price}} &bull; {{card.weight}}<label *ngIf="card.category != 'drinks'">g</label><label *ngIf="card.category == 'drinks'">ml</label></h2>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEARCH GRID -->
+    <div class="cardGrid animated slideInUp" *ngIf="showSearch && loading" id="snackCard">
       <div class="card" *ngFor="let card of cards | filter:searchItems"  (click)="showItemDetails(card)">
         <img class="snackImg" [src]="card.imgurl" />
         <div class="bottomInfo">
@@ -66,15 +96,6 @@
       </div>
     </div>
 
-    <div class="cardGrid" *ngIf="!showSearch && loading" id="snackCard">
-      <div class="card" *ngFor="let card of cards"  (click)="showItemDetails(card)" [hidden]="card.category != selectedCat" >
-        <img class="snackImg" [src]="card.imgurl" />
-        <div class="bottomInfo">
-          <h2 class="snackName">{{card.name}}</h2>
-          <h2 class="snackPrice">${{card.price}} &bull; {{card.weight}}<label *ngIf="card.category != 'drinks'">g</label><label *ngIf="card.category == 'drinks'">ml</label></h2>
-        </div>
-      </div>
-    </div>
 
   </div>
 

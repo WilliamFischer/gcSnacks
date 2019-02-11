@@ -1,10 +1,23 @@
+<div class="loginDaddy"></div>
 
+<ion-content>
 
-<ion-content >
   <h1 class="loginLogo">Munch</h1>
-  <h2 class="loginText">Snacks delivered on the Gold Coast until 3am.</h2>
+  <h2 class="loginText">Affordable snacks delivered on the Gold Coast until 3am.</h2>
 
-  <button class="loginBtn facebook" (click)="facebookLogin()">Login with Facebook</button> <br />
-  <button class="loginBtn google" (click)="googleLogin()">Login with Google</button>
+  <div *ngIf="!emailMode">
+    <button class="loginBtn email" (click)="emailTrigger()">Continue with an Email</button> <br />
+    <button class="loginBtn facebook" (click)="facebookLogin()">Continue with Facebook</button> <br />
+    <button class="loginBtn google" (click)="googleLogin()">Continue with Google</button>
+  </div>
 
+  <div *ngIf="emailMode" class="emailWrapper">
+    <input class="emailInput" name="email" type="email" placeholder="Email Address" [(ngModel)]="email"/>
+    <input class="emailInput" name="password" type="password" placeholder="Password" [(ngModel)]="password"/>
+
+    <button type="button" name="button" class="sumbitEmailBtn continue" (click)="submitEmail()" [disabled]="!email || !password">Continue</button>
+    <button type="button" name="button" class="sumbitEmailBtn" (click)="emailTrigger()">Back</button>
+  </div>
+
+  <h2 class="continuteLegalTxt">By logging in you agree to our <br /><a href="#" (click)="openTAC()">Terms and Conditions</a> & <a href="#" (click)="openPP()">Privacy Policy</a></h2>
 </ion-content>

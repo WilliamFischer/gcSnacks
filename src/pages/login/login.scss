@@ -1,11 +1,28 @@
 page-login {
+  ion-content{
+    background: transparent !important;
+  }
+
+  .loginDaddy{
+    // background: url(https://data.whicdn.com/images/89131124/original.gif) #BFACAA;
+    background: #fff;
+    // background-repeat: no-repeat;
+    // background-size: 40%;
+    // background-position: center;
+    // opacity: 0.8;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 0;
+  }
+
   .loginLogo{
     font-family: 'Gloria Hallelujah', cursive;
     font-weight: bolder;
     font-size: 56px;
     width: 100%;
     color: #4A4E69;
-    margin-top: 20%;
+    margin-top: 30%;
     letter-spacing: 1px;
     text-align: center;
   }
@@ -15,8 +32,7 @@ page-login {
     font-weight: bolder;
     font-size: 12px;
     width: 80%;
-    color: #4A4E69;
-    margin-top: 5%;
+    color: #c4c6d6;
     letter-spacing: 1px;
     text-align: center;
     margin-bottom: 60%;
@@ -24,6 +40,30 @@ page-login {
     margin-right: auto;
     left: 0;
     right: 0;
+    padding: 10%;
+    padding-top: 3%;
+    padding-bottom: 0%;
+  }
+
+  .continuteLegalTxt{
+    font-weight: 600;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 8px;
+    line-height: 15px;
+    text-transform: uppercase;
+    width: 80%;
+    color: #c4c6d6;
+    letter-spacing: 1px;
+    text-align: center;
+    margin-bottom: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    padding: 10%;
+    padding-top: 3%;
+    padding-bottom: 0%;
+    margin-top: 8%;
   }
 
   .loginBtn{
@@ -35,17 +75,82 @@ page-login {
     left: 0;
     right: 0;
     padding: 5%;
-    margin-top: 5%;
+    margin-top: 2%;
     color: #fff;
-    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-family: 'Nunito Sans', sans-serif;
     border-radius: 3px;
+    //text-transform: lowercase;
+    font-size: 14px;
+    box-shadow: 0px 0px 10px #d3d3d3;
+    background: #fff;
   }
 
   .facebook{
-    background: #3b5998;
+    color: #3b5998;
+
   }
 
   .google{
-    background: #DA4E43;
+    color: #DA4E43;
   }
+
+  .email{
+    color: #8e8e8e;
+    margin-top: -15vh;
+  }
+
+  .emailWrapper{
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    width: 70%;
+    display: block;
+    margin-top: -25vh;
+    padding: 2%;
+  }
+
+  .emailInput{
+    display: block;
+    width: 100%;
+    padding: 5%;
+    border: 1px solid #d3d3d3;
+    margin-top: 2vh;
+    font-weight: 400;
+    font-family: 'Nunito Sans', sans-serif;
+  }
+
+  .sumbitEmailBtn{
+    width: 100%;
+    height: auto;
+    padding: 7%;
+    margin-top: 5%;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'Nunito Sans', sans-serif;
+    color: #8e8e8e;
+    background: none;
+    border: 1px solid #d3d3d3;
+  }
+
+  .continue{
+    color: #20bf6b;
+    border: 1px solid #20bf6b;
+  }
+
+  // IPHONE X
+  @media only screen
+    and (device-width : 375px)
+    and (device-height : 812px)
+    and (-webkit-device-pixel-ratio : 3) {
+      .loginLogo{
+        margin-top: 40%;
+      }
+
+      .facebook{
+        margin-top: 10vh;
+      }
+    }
 }

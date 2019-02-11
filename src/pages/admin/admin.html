@@ -33,28 +33,36 @@
             </div>
         </div>
 
-        <div class="finishOrderMenu" *ngIf="order.approved" (click)="completeOrder(order)">
-            COMPLETE DELIVERY
+        <div class="finishOrderMenu" *ngIf="order.approved && !order.timer" (click)="setTimer(order)">
+            AT LOCATION
+        </div>
+
+        <p class="timerText" *ngIf="order.approved && order.timer">{{timerTime}}</p>
+        <div class="finishOrderMenu" *ngIf="order.approved && order.timer" (click)="completeOrder(order)">
+          ORDER DELIVERED
         </div>
 
         <ul class="completeOptions" *ngIf="order.approved">
-          <li style="background: #182C61;">Call Driver</li>
-          <li style="background: #FEA47F" (click)="cancelOrder(order)">Cancel Order</li>
+          <li style="background: #182C61;">Call Customer</li>
+          <li style="background: #FEA47F;" *ngIf="!order.timer" (click)="cancelOrder(order)">Cancel Order</li>
+          <li style="background: #ff4757;" *ngIf="order.timer && !timerPaused" (click)="pauseTimer(timerTime)">Pause Timer</li>
+          <li style="background: #2ed573;" *ngIf="order.timer && timerPaused" (click)="resumeTimer(order)">Resume Timer</li>
         </ul>
 
         <div class="menuItem">
-          <img [src]="deliverie.imgurl" class="cartImg"  *ngFor="let deliverie of deliveries"  [hidden]="deliverie.time != order.time"/>
-          <!-- <div class="rightSideContent">
-            <h1 class="itemCartName">{{ deliverie.item }}</h1>
+          <!-- <img [src]="deliverie.imgurl" class="cartImg"  />
+           -->
+           <div class="rightSideContent" *ngFor="let deliverie of deliveries; index as i"  [hidden]="deliverie.time != order.time">
+            <h1 class="itemCartName">{{ deliverie.quanitity }}x {{ deliverie.item }}</h1>
             <h2 class="itemCartPrice">${{ deliverie.price }}</h2>
-          </div> -->
+          </div>
         </div>
 
       </div>
     </div>
   </div>
   <div *ngIf="addSnack">
-    <h1>Add Snack</h1>
+    <h1 class="addSncakTitle">Add A Snack</h1>
     <form (ngSubmit)="addItem()">
       <ion-item>
         <ion-label floating>Name</ion-label>
